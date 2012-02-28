@@ -1,0 +1,8 @@
+In order to build the server:
+Go into brawl_server
+Run rebar get-deps
+Run rebar compile
+Run rebar generate
+This will create a directory called "brawl_server" in brawl_server/rel
+Copy this directory to where ever you want to install it
+Run brawl_server/bin/brawl_server start to start the server
