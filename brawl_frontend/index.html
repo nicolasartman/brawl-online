@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+    <link rel="stylesheet" href="css/styles.css" type="text/css" media="screen" charset="utf-8">
+    <script src="js/underscore.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-1.7.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/state.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/view.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+       <script type="text/javascript" charset="utf-8">
+    //   setInterval(function() {
+    //     location.reload(true);
+    //   }, 5000);
+       </script>
+    <title>
+      Brawl
+    </title>
+  </head>
+  <body>
+    <div class="box" id="play-area">
+      <div class="player-area" id="P1">
+        <div class="card" id="P1Hand"    fromLocation="discard" toLocation="hand">
+          Hand
+        </div>
+        <div class="card" id="P1Discard" fromLocation="hand" toLocation="discard">
+          Discard
+        </div>
+        <div class="card" id="P1Deck"    fromLocation="deck" toLocation="hand">
+          Deck
+        </div>
+      </div>
+      <div class="box" id="lanes">
+        <div class="lane">
+        </div>
+        <div class="lane">
+        </div>
+        <div class="lane">
+        </div>
+      </div>
+      <div class="player-area" id="P2">
+        <div class="card" id="P2Hand"    fromLocation="discard" toLocation="hand">
+          Hand
+        </div>
+        <div class="card" id="P2Discard" fromLocation="hand" toLocation="discard">
+          Discard
+        </div>
+        <div class="card" id="P2Deck"    fromLocation="deck" toLocation="hand">
+          Deck
+        </div>
+      </div>
+    </div>
+    <!-- Dialogs and Notifications -->
+    <div class="notification" id="connecting-notification">
+      Connecting to game...
+    </div>
+    <div id="game-id"></div>
+    <div class="dialog" id="choose-player-type-dialog">
+      <div class="title">Choose A Player</div>
+      <div class="choice player-type-choice" id="player1" choice="player1">
+        Player 1
+      </div>
+      <div class="choice player-type-choice" id="player2" choice="player2">
+        Player 2
+      </div>
+      <div class="choice player-type-choice" id="spectator" choice="spectator">
+        Spectator
+      </div>
+    </div>
+    <div class="dialog" id="choose-game-dialog">
+      <div class="title">Join or Create a Game</div>
+      <div class="choice game-choice" id="new-game">
+        Create a Game
+      </div>
+      <div class="choice game-choice" id="existing-game-container">
+        Join game <br />
+        <input type="textfield" value="Paste game id number here"/>
+        <div class="choice" id="existing-game">
+          Join
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

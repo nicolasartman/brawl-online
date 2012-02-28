@@ -1,0 +1,225 @@
+body {
+  background-color: #000;
+}
+
+div {
+/*  border: 1px solid #09f;*/
+}
+
+/* Deprecate */
+.box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  min-width: 40px;
+  min-height: 40px;
+/*  border: 1px solid #999;*/
+  -moz-box-shadow: 0px 0px 10px #000000; /* FF3.5+ */
+  -webkit-box-shadow: 0px 0px 10px #000000; /* Saf3+, Chrome */
+  box-shadow: 0px 0px 10px #000000; /* Standard. Opera 10.5, IE9 */
+}
+
+
+
+#game-id {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  font-size: 24pt;
+  color: #DDD;
+}
+
+#play-area {
+  display: none;
+  background-color: #222;
+  width: 1000px;
+  height: 700px;
+  margin-left: -500px;
+  margin-top: -350px;
+}
+
+.dialog {
+  display: none;
+  position: absolute;
+  width: 500px;
+  height: 350px;
+  background-color: #222;
+  border: 1px solid #CCC;
+  left: 50%;
+  top: 50%;
+  margin-left: -250px;
+  margin-top: -175px;
+  text-align: center;
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+  color: #DDD;
+  font-size: 2em;
+}
+
+.choice {
+  font-size: 18pt;
+  color: #DDD;
+  position: relative;
+  float:left;
+  background-color: #555;
+  text-align: center;
+  border: 1px solid #AAA;
+}
+
+.player-type-choice {
+  left: 80px;
+  margin-right: 20px;
+  margin-top: 100px;
+  width: 100px;
+  height: 100px;
+}
+
+.game-choice {
+  left: 40px;
+  margin-right: 20px;
+  margin-top: 100px;
+  width: 200px;
+  height: 150px;
+}
+/* TODO: Refactor */
+#existing-game-container:hover {
+  background-color: #555;
+}
+
+#existing-game:hover {
+  background-color: #888;
+}
+#existing-game {
+  margin-right: 5px;
+  float: right;
+}
+
+/* end stuff that needs refactoring */
+
+.choice:hover {
+  background-color: #888;
+}
+
+
+
+#connecting-notification {
+  display: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width:100%;
+  background-color: orange;
+  font: 1.4em "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  padding: 4px 0px;
+}
+
+.player-area {
+  position: relative;
+  width: 90px;
+  height: 370px;
+  top:50%;
+  margin-top:-185px;
+/*  z-index: 5;*/
+}
+
+#P1 {
+  float: left;
+  margin-left: 50px;
+}
+
+#P2 {
+  float: right;
+  margin-right: 50px;
+}
+
+.card {
+  font: 1em "Impact", "Trebuchet MS", Verdana, sans-serif;
+/*  font-weight: bold;*/
+  background-color: #DDD;
+  border: 2px solid #999;
+  width: 90px;
+  height: 120px;
+}
+
+.card.base {
+  margin-top: -60px;
+}
+
+/* A card in a lane */
+.lane .card {
+  left:50%;
+  margin-left: -45px;
+  position: absolute;
+  top: 50%;
+}
+
+.cardLabelTop {
+
+}
+
+.cardLabelMiddle {
+  position:absolute;
+  height: 20px;
+  top: 50%;
+  width:100%;
+  text-align:center;
+  margin-top: -10px;
+}
+
+.cardLabelBottom {
+  position: absolute;
+  bottom:0;
+  right:0;
+}
+
+
+.lane {
+  float: left;
+  position: relative;
+  width: 150px;
+  height: 600px;
+  border: 2px dotted #999;
+  background-color: #333;
+/*  margin-top: -500px; */
+}
+
+#lanes {
+  margin-top: -300px;
+  margin-left: -225px;
+  height: 600px;
+/*  width: 465px;*/
+  overflow: visible;
+}
+
+.P1Stack {
+  vertical-align: bottom;
+}
+
+.base {
+  float: center;
+}
+
+.P2Stack {
+  float: bottom;
+}
+
+/* =============== */
+/* = Card Colors = */
+/* =============== */
+
+.red {
+  background-color: #EB060B;
+}
+
+.blue {
+  background-color: #375EC3;
+}
+
+.green {
+  background-color: #7AB317;
+}

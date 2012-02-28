@@ -1,9 +1,0 @@
-{release,
-  {"brawl_server", "1.1.0"},
-  {erts, "5.9"},
-  [{kernel, "2.15"},
-   {stdlib, "1.18"},
-   {sasl, "2.2"},
-   {cowboy, "0.5.0"},
-   {jiffy, "0.4.0"},
-   {brawl_server, "1.1", permanent}]}.
