@@ -1,0 +1,15 @@
+{application, brawl_server,
+ [
+  {description, ""},
+  {vsn, "1.1"},
+  {modules, [ brawl, brawl_tests, brawl_server, brawl_server_sup, brawl_server_app, brawl_connection_listener ] },
+  {registered, [brawl_server, brawl_connection_listener]},
+  {applications, [
+                  jiffy,
+                  cowboy,
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { brawl_server_app, []}},
+  {env, []}
+ ]}.

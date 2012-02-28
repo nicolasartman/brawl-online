@@ -1,0 +1,9 @@
+{release,
+  {"brawl_online", "1.1"},
+  {erts, "5.9"},
+  [{kernel, "2.15"},
+   {stdlib, "1.18"},
+   {sasl, "2.2"},
+   {jiffy, "0.4.0-1-gd6f6a86"},
+   {cowboy, "0.5.0"},
+   {brawl_server, "1.1", permanent}]}.
