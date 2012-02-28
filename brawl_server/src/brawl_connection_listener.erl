@@ -1,7 +1,7 @@
 -module(brawl_connection_listener).
 -behavior(cowboy_http_handler).
 -behavior(cowboy_http_websocket_handler).
--include("../cowboy/include/http.hrl").
+-include("deps/cowboy/include/http.hrl").
 -include("include/brawl_req.hrl").
 -export([init/3, handle/2, terminate/2]).
 -export([websocket_init/3, websocket_handle/3,

@@ -1,3 +1,4 @@
 ebin
 *.beam
 deps
+rel/brawl_server
