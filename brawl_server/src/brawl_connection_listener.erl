@@ -15,7 +15,6 @@ init({_Any, http}, Req, []) ->
     {<<"WebSocket">>, _Output} -> {upgrade, protocol, cowboy_http_websocket}
   end.
 
-%TODO create a rest call to create a new game and send back the id
 handle(Req, State) ->
   io:format("Handling request~n"),
   GameId = brawl_server:new_game(),
@@ -42,7 +41,7 @@ websocket_handle({text, Msg}, Req, PlayerId) ->
         true ->
           ets:insert(connections, #brawl_connection{game_id=GameId, websocket=Req#http_req.pid}),
           {P1, P2} = brawl_server:get_players(GameId),
-          Reply = create_connected(P1 == none, P2 == none),
+          Reply = create_connected(P1 == none, P2 == none, brawl:decks()),
           io:format("Game found, players: ~w ~w, reply:~s~n", [P1, P2, Reply]),
           {reply, {text,Reply}, Req, PlayerId};
         Result ->
@@ -141,8 +140,11 @@ create_error(Msg, ErrorType) ->
   create_message(<<"error">>, {[ {<<"errorMessage">>, list_to_bitstring(Msg) },
                                  {<<"errorType">>, list_to_bitstring(ErrorType)} ]}).
 
-create_connected(P1, P2) ->
-  create_message(<<"connected">>, {[ {<<"player1">>, P1 }, {<<"player2">>, P2} ]}).
+create_connected(P1, P2, Decks) ->
+  create_message(<<"connected">>, {[ {<<"player1">>, P1 }, {<<"player2">>, P2},
+                  {<<"decks">>, lists:foldl(fun(Name, List) -> 
+                                              [ list_to_bitstring(Name) | List ]
+                                            end, [], Decks)} ]}).
 
 create_joined(Id) ->
   create_message(<<"joined">>,{[ { <<"playerID">>, Id} ]}). 
