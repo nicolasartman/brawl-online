@@ -254,6 +254,8 @@ color_to_string(green) ->
 
 card_type_to_string(hit) ->
   <<"hit">>;
+card_type_to_string(null) ->
+  <<"null">>;
 card_type_to_string(double) ->
   <<"double">>;
 card_type_to_string(hit2) ->
