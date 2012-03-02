@@ -136,7 +136,7 @@ var view = (function () {
     // Choose new game or join existing game dialog
     $('#new-game').click(function (event) {
       $('#choose-game-dialog').fadeOut(200)
-      $.get('http://localhost:8080', function (data, textStatus, xhr) {
+      $.get('http://' + window.location.host + '/brawl/new_game', function (data, textStatus, xhr) {
         var gameID = JSON.parse(data)["GameId:"]
 
         // TODO: fix key so it's gameID

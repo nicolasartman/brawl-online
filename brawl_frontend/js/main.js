@@ -11,7 +11,12 @@
 
 $(document).ready(function ($) {
   "use strict";
-  var socket = new WebSocket("ws://ps86615.dreamhostps.com:8080");
+  var socket
+  try {
+    socket = new WebSocket("ws://" + window.location.host + ":8080/play")
+  } catch (e) {
+    socket = new MozWebSocket("ws://" + window.location.host + ":8080/play")
+  }
 
   // Initialize view actions so the view can send messages back through the socket
   view.init({
