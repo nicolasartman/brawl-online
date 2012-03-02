@@ -154,8 +154,8 @@ create_game_state(State) ->
 
 create_started(State, {Player1Deck, Player2Deck}) ->
   create_message(<<"started">>, {[game_to_json_form(State),
-                                  {<<"player1deck">>, list_to_bitstring(Player1Deck) },
-                                  {<<"player2deck">>, list_to_bitstring(Player2Deck) } ]}).
+                                  {<<"player1Deck">>, list_to_bitstring(Player1Deck) },
+                                  {<<"player2Deck">>, list_to_bitstring(Player2Deck) } ]}).
 
 create_game_over(Winner) ->
   create_message( <<"game_over">>, {[ { <<"winner">>, list_to_bitstring(atom_to_list(Winner)) } ]}).
