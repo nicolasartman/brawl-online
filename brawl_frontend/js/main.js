@@ -11,7 +11,7 @@
 
 $(document).ready(function ($) {
   "use strict";
-  var socket = new WebSocket("ws://localhost:8080");
+  var socket = new WebSocket("ws://ps86615.dreamhostps.com:8080");
 
   // Initialize view actions so the view can send messages back through the socket
   view.init({
