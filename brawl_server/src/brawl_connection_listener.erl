@@ -56,7 +56,7 @@ websocket_handle({text, Msg}, Req, PlayerId) ->
         spectator ->
           case brawl_server:start_game(GameId) of
             {started, GameState} ->
-              {reply, {text, create_started(GameState)}, Req, PlayerId};
+              {reply, {text, create_started(GameState, brawl_server:get_decks(GameId))}, Req, PlayerId};
             _ ->
               {ok, Req, PlayerId}
           end;
@@ -128,7 +128,7 @@ send_start([[Ws] | Wses], Message) ->
 
 broadcast_start(GameId, GameState) ->
   io:format("Got state: ~w~n", [GameState]),
-  Message = create_started(GameState),
+  Message = create_started(GameState, brawl_server:get_decks(GameId)),
   Wses = ets:match(connections, #brawl_connection{game_id = GameId, websocket='$1'}),
   io:format("Broadcasting message: ~s~n", [Message]),
   send_start(Wses, Message).
@@ -150,10 +150,12 @@ create_joined(Id) ->
   create_message(<<"joined">>,{[ { <<"playerID">>, Id} ]}). 
 
 create_game_state(State) ->
-  create_message(<<"game_state">>, game_to_json_form(State)).
+  create_message(<<"game_state">>, {[game_to_json_form(State)]}).
 
-create_started(State) ->
-  create_message(<<"started">>, game_to_json_form(State)).
+create_started(State, {Player1Deck, Player2Deck}) ->
+  create_message(<<"started">>, {[game_to_json_form(State),
+                                  {<<"player1deck">>, list_to_bitstring(Player1Deck) },
+                                  {<<"player2deck">>, list_to_bitstring(Player2Deck) } ]}).
 
 create_game_over(Winner) ->
   create_message( <<"game_over">>, {[ { <<"winner">>, list_to_bitstring(atom_to_list(Winner)) } ]}).
@@ -313,7 +315,7 @@ discard_to_json_form([Card | _Cards]) ->
 
 game_to_json_form({ Bases, { P1Hand, P1Discard }, { P2Hand, P2Discard } }) ->
   io:format("Encoding game~n"),
-  JSON_Form ={[ {<<"gameState">>, {[ bases_to_json_form(Bases), 
+  JSON_Form = {<<"gameState">>, {[ bases_to_json_form(Bases), 
     {<<"P1">>, 
       {[ { <<"hand">>, hand_to_json_form(P1Hand)},
        { <<"discard">>, discard_to_json_form(P1Discard)}
@@ -322,7 +324,7 @@ game_to_json_form({ Bases, { P1Hand, P1Discard }, { P2Hand, P2Discard } }) ->
       {[ { <<"hand">>, hand_to_json_form(P2Hand)},
        { <<"discard">>, discard_to_json_form(P2Discard)}
        ]} }
-   ]} } ]},
+   ]} } ,
   io:format("Json form:~w~n", [JSON_Form]),
   JSON_Form.
 

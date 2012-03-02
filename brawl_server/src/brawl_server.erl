@@ -2,7 +2,8 @@
 -behavior(gen_server).
 -include("include/brawl_req.hrl").
 -export([start/0, start_link/0, init/1, handle_call/3, terminate/2]).
--export([new_game/0, start_game/1, play/4, state/1, stop/1, exists/1, leave/2, join/3, get_players/1]).
+-export([new_game/0, start_game/1, play/4, 
+         state/1, stop/1, exists/1, leave/2, join/3, get_players/1, get_decks/1]).
 
 new_game() ->
   GameId = brawl:generate_id(),
@@ -28,6 +29,8 @@ join(GameId, Player, Deck) ->
   call_game(GameId, {join, Player, Deck}).
 leave(GameId, Player) ->
   call_game(GameId, {leave, Player}).
+get_decks(GameId) ->
+  call_game(GameId, get_decks).
 
 stop(GameId) ->
   case call_game(GameId, stop) of
@@ -107,6 +110,8 @@ handle_call({leave, PlayerId}, _From, Game) ->
       io:format("spectator left~n", []),
       {reply, spectator, Game}
   end;
+handle_call(get_decks, _from, Game) ->
+  {reply, {Game#brawl_game.player1deck, Game#brawl_game.player2deck}, Game};
 handle_call(get_players, _from, Game) ->
   {reply, {Game#brawl_game.player1, Game#brawl_game.player2}, Game};
 handle_call(start_game, _From, Game) ->
@@ -117,8 +122,8 @@ handle_call(start_game, _From, Game) ->
                 player1deck = Deck1, player2deck = Deck2} when
         Player1 /= none,
         Player2 /= none ->
-      GameState = brawl:new_game(Deck1, Deck2),
-      {reply, {started, visible_state(GameState)}, Game#brawl_game{state=GameState}};
+      {Deck1Name, Deck2Name, GameState} = brawl:new_game(Deck1, Deck2),
+      {reply, {started, visible_state(GameState)}, Game#brawl_game{state=GameState, player1deck=Deck1Name, player2deck=Deck2Name}};
     _ ->
       {reply, {error, not_enough_players}, Game}
   end;

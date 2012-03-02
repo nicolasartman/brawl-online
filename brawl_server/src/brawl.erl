@@ -34,41 +34,41 @@ create_deck("bennet") ->
     {{hit, green}, 3}, {{hit2, green}, 0}, {{block, green}, 1},
     {{hit, red}, 4}, {{hit2, red}, 0}, {{block, red}, 1},
     {base, 7}, {clear, 6}, {press, 1}], []),
-  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+  {"bennet", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck("chris") ->
   Deck = build_deck_from_def(
     [ {{hit, blue}, 7}, {{hit2, blue}, 0}, {{block, blue}, 2},
     {{hit, green}, 5}, {{hit2, green}, 0}, {{block, green}, 2},
     {{hit, red}, 8}, {{hit2, red}, 0}, {{block, red}, 2},
     {base, 4}, {clear, 2}, {press, 0}], []),
-  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+  {"chris", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck("darwin") ->
   Deck = build_deck_from_def([{{hit, blue}, 4}, {{hit2, blue}, 1}, {{block, blue}, 3},
     {{hit, green}, 4}, {{block, green}, 1},
     {{hit, red}, 8}, {{hit2, red}, 1}, {{block, red}, 3},
     {base, 3}, {clear, 1}, {press, 3}], []),
-  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+  {"darwin", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck("hale") ->
   Deck = build_deck_from_def(
     [ {{hit, blue}, 5}, {{hit2, blue}, 1}, {{block, blue}, 0},
     {{hit, green}, 8}, {{hit2, green}, 1}, {{block, green}, 1},
     {{hit, red}, 4}, {{hit2, red}, 1}, {{block, red}, 1},
     {base, 6}, {clear, 4}, {press, 0}], []),
-  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+  {"hale", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck("morgan") ->
   Deck = build_deck_from_def(
     [ {{hit, blue}, 8}, {{hit2, blue}, 0}, {{block, blue}, 4},
     {{hit, green}, 6}, {{hit2, green}, 0}, {{block, green}, 2},
     {{hit, red}, 2}, {{hit2, red}, 0}, {{block, red}, 1},
     {base, 5}, {clear, 4}, {press, 0}], []),
-  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+  {"morgan", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck("pearl") ->
   Deck = build_deck_from_def(
     [ {{hit, blue}, 7}, {{hit2, blue}, 1}, {{block, blue}, 1},
     {{hit, green}, 7}, {{hit2, green}, 1}, {{block, green}, 1},
     {{hit, red}, 1}, {{hit2, red}, 0}, {{block, red}, 1},
     {base, 5}, {clear, 5}, {press, 2}], []),
-  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+  {"pearl", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck("alex") ->
   Deck = build_deck_from_def(
     [ {{hit, blue}, 5}, {{block, blue}, 1},
@@ -76,7 +76,7 @@ create_deck("alex") ->
     {{hit, red}, 7}, {{block, red}, 2},
     {base, 4}, {clear, 5}, {press, 0},
     {hold, 1}, {reverse, 0}, {null, 1}], []),
-  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+  {"alex", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck("crane") ->
   Deck = build_deck_from_def(
     [ {{hit, blue}, 2}, {{block, blue}, 2},
@@ -84,7 +84,7 @@ create_deck("crane") ->
     {{hit, red}, 9}, {{block, red}, 2},
     {base, 5}, {clear, 2}, {press, 0},
     {hold, 2}, {reverse, 2}, {null, 2}], []),
-  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+  {"crane", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck("gina") ->
   Deck = build_deck_from_def(
     [ {{hit, blue}, 9}, {{block, blue}, 0},
@@ -92,7 +92,7 @@ create_deck("gina") ->
     {{hit, red}, 4}, {{block, red}, 1},
     {base, 5}, {clear, 5}, {press, 2},
     {hold, 3}, {reverse, 0}, {null, 1}], []),
-  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+  {"gina", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck("mischo") ->
   Deck = build_deck_from_def(
     [ {{hit, blue}, 6}, {{block, blue}, 1},
@@ -100,7 +100,7 @@ create_deck("mischo") ->
     {{hit, red}, 4}, {{block, red}, 0},
     {base, 5}, {clear, 4}, {press, 3},
     {hold, 1}, {reverse, 1}, {null, 0}], []),
-  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+  {"mischo", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck("rent") ->
   Deck = build_deck_from_def(
     [ {{hit, blue}, 7}, {{block, blue}, 1},
@@ -108,7 +108,7 @@ create_deck("rent") ->
     {{hit, red}, 5}, {{block, red}, 1},
     {base, 6}, {clear, 1}, {press, 0},
     {hold, 0}, {reverse, 3}, {null, 1}], []),
-  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+  {"rent", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck("tess") ->
   Deck = build_deck_from_def(
     [ {{hit, blue}, 3}, {{block, blue}, 1},
@@ -116,25 +116,25 @@ create_deck("tess") ->
     {{hit, red}, 5}, {{block, red}, 1},
     {base, 5}, {clear, 3}, {press, 0},
     {hold, 0}, {reverse, 1}, {null, 3}], []),
-  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+  {"tess", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck("nickie") ->
   Deck = build_deck_from_def([{{hit, blue}, 4}, {{hit2,blue}, 0}, {{block,blue}, 2},
     {{hit,green}, 4}, {{hit2,green}, 0}, {{block,green}, 1},
     {{hit, red}, 4}, {{hit2, red}, 0}, {{block, red}, 2},
     {base, 4}, {clear, 7}, {reverse, 1}, {double, 3}], [] ),
-  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+  {"nickie", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck("sonia") ->
   Deck = build_deck_from_def([{{hit, blue}, 6}, {{hit2,blue}, 0}, {{block,blue}, 1},
     {{hit,green}, 3}, {{hit2,green}, 0}, {{block,green}, 1},
     {{hit, red}, 4}, {{hit2, red}, 0}, {{block, red}, 1},
     {base, 6}, {clear, 5}, {reverse, 0}, {double, 2}], [] ),
-  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+  {"sonia", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck("tamiya") ->
   Deck = build_deck_from_def([{{hit, blue}, 3}, {{hit2,blue}, 1}, {{block,blue}, 2},
     {{hit,green}, 3}, {{hit2,green}, 1}, {{block,green}, 2},
     {{hit, red}, 10}, {{hit2, red}, 1},
     {base, 3}, {clear, 5}, {reverse, 1}], [] ),
-  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+  {"tamiya", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck(DeckName) ->
   Decks = decks(),
   RandomDeck = random:uniform(length(Decks)),
@@ -156,9 +156,11 @@ build_deck_from_def([ {Card, Number} | Cards], Deck) ->
   build_deck_from_def(Cards, add_card(Card, Deck, Number)).
   
 new_game(Deck1, Deck2) ->
-  Game = { [], { [], [], create_deck(Deck1)}, { [], [], create_deck(Deck2)}},
+  { Deck1Name, Deck1Cards } = create_deck(Deck1),
+  { Deck2Name, Deck2Cards } = create_deck(Deck2),
+  Game = { [], { [], [], Deck1Cards}, { [], [], Deck2Cards}},
   OneBase = add_base_left(Game),
-  add_base_left(OneBase).
+  { Deck1Name, Deck2Name, add_base_left(OneBase)}.
 
 % Game = { [{id, p1, mods, p2}, base2, base3], { p1hand, p1discard, p1deck}, {p2hand, p2discard, p2deck} }
 
