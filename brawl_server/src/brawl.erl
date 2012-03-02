@@ -1,6 +1,7 @@
 -module(brawl).
--export([play/3, new_game/2, generate_id/0]).
+-export([play/3, new_game/2, generate_id/0, decks/0]).
 
+%TODO figure out a better way to do ids
 generate_id() ->
   list_to_bitstring(lists:concat(tuple_to_list(now()))).
 
@@ -22,11 +23,111 @@ shuffle_deck(DeckIn, DeckOut) ->
   Card = get_index(DeckIn, Index),
   shuffle_deck( remove_index([], DeckIn, Index), [ Card | DeckOut]).
 
+decks() ->
+  [ "bennet", "chris", "darwin", "hale", "morgan", "pearl",
+    "alex", "crane", "gina", "mischo", "rent", "tess",
+    "nickie", "sonia", "tamiya" ].
+
+create_deck("bennet") ->
+  Deck = build_deck_from_def(
+    [ {{hit, blue}, 8}, {{hit2, blue}, 0}, {{block, blue}, 1},
+    {{hit, green}, 3}, {{hit2, green}, 0}, {{block, green}, 1},
+    {{hit, red}, 4}, {{hit2, red}, 0}, {{block, red}, 1},
+    {base, 7}, {clear, 6}, {press, 1}], []),
+  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+create_deck("chris") ->
+  Deck = build_deck_from_def(
+    [ {{hit, blue}, 7}, {{hit2, blue}, 0}, {{block, blue}, 2},
+    {{hit, green}, 5}, {{hit2, green}, 0}, {{block, green}, 2},
+    {{hit, red}, 8}, {{hit2, red}, 0}, {{block, red}, 2},
+    {base, 4}, {clear, 2}, {press, 0}], []),
+  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
 create_deck("darwin") ->
   Deck = build_deck_from_def([{{hit, blue}, 4}, {{hit2, blue}, 1}, {{block, blue}, 3},
     {{hit, green}, 4}, {{block, green}, 1},
     {{hit, red}, 8}, {{hit2, red}, 1}, {{block, red}, 3},
     {base, 3}, {clear, 1}, {press, 3}], []),
+  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+create_deck("hale") ->
+  Deck = build_deck_from_def(
+    [ {{hit, blue}, 5}, {{hit2, blue}, 1}, {{block, blue}, 0},
+    {{hit, green}, 8}, {{hit2, green}, 1}, {{block, green}, 1},
+    {{hit, red}, 4}, {{hit2, red}, 1}, {{block, red}, 1},
+    {base, 6}, {clear, 4}, {press, 0}], []),
+  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+create_deck("morgan") ->
+  Deck = build_deck_from_def(
+    [ {{hit, blue}, 8}, {{hit2, blue}, 0}, {{block, blue}, 4},
+    {{hit, green}, 6}, {{hit2, green}, 0}, {{block, green}, 2},
+    {{hit, red}, 2}, {{hit2, red}, 0}, {{block, red}, 1},
+    {base, 5}, {clear, 4}, {press, 0}], []),
+  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+create_deck("pearl") ->
+  Deck = build_deck_from_def(
+    [ {{hit, blue}, 7}, {{hit2, blue}, 1}, {{block, blue}, 1},
+    {{hit, green}, 7}, {{hit2, green}, 1}, {{block, green}, 1},
+    {{hit, red}, 1}, {{hit2, red}, 0}, {{block, red}, 1},
+    {base, 5}, {clear, 5}, {press, 2}], []),
+  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+create_deck("alex") ->
+  Deck = build_deck_from_def(
+    [ {{hit, blue}, 5}, {{block, blue}, 1},
+    {{hit, green}, 4},  {{block, green}, 2},
+    {{hit, red}, 7}, {{block, red}, 2},
+    {base, 4}, {clear, 5}, {press, 0},
+    {hold, 1}, {reverse, 0}, {null, 1}], []),
+  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+create_deck("crane") ->
+  Deck = build_deck_from_def(
+    [ {{hit, blue}, 2}, {{block, blue}, 2},
+    {{hit, green}, 2},  {{block, green}, 2},
+    {{hit, red}, 9}, {{block, red}, 2},
+    {base, 5}, {clear, 2}, {press, 0},
+    {hold, 2}, {reverse, 2}, {null, 2}], []),
+  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+create_deck("gina") ->
+  Deck = build_deck_from_def(
+    [ {{hit, blue}, 9}, {{block, blue}, 0},
+    {{hit, green}, 1},  {{block, green}, 1},
+    {{hit, red}, 4}, {{block, red}, 1},
+    {base, 5}, {clear, 5}, {press, 2},
+    {hold, 3}, {reverse, 0}, {null, 1}], []),
+  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+create_deck("mischo") ->
+  Deck = build_deck_from_def(
+    [ {{hit, blue}, 6}, {{block, blue}, 1},
+    {{hit, green}, 7},  {{block, green}, 0},
+    {{hit, red}, 4}, {{block, red}, 0},
+    {base, 5}, {clear, 4}, {press, 3},
+    {hold, 1}, {reverse, 1}, {null, 0}], []),
+  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+create_deck("rent") ->
+  Deck = build_deck_from_def(
+    [ {{hit, blue}, 7}, {{block, blue}, 1},
+    {{hit, green}, 6},  {{block, green}, 1},
+    {{hit, red}, 5}, {{block, red}, 1},
+    {base, 6}, {clear, 1}, {press, 0},
+    {hold, 0}, {reverse, 3}, {null, 1}], []),
+  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+create_deck("tess") ->
+  Deck = build_deck_from_def(
+    [ {{hit, blue}, 3}, {{block, blue}, 1},
+    {{hit, green}, 8},  {{block, green}, 2},
+    {{hit, red}, 5}, {{block, red}, 1},
+    {base, 5}, {clear, 3}, {press, 0},
+    {hold, 0}, {reverse, 1}, {null, 3}], []),
+  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+create_deck("nickie") ->
+  Deck = build_deck_from_def([{{hit, blue}, 4}, {{hit2,blue}, 0}, {{block,blue}, 2},
+    {{hit,green}, 4}, {{hit2,green}, 0}, {{block,green}, 1},
+    {{hit, red}, 4}, {{hit2, red}, 0}, {{block, red}, 2},
+    {base, 4}, {clear, 7}, {reverse, 1}, {double, 3}], [] ),
+  lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
+create_deck("sonia") ->
+  Deck = build_deck_from_def([{{hit, blue}, 6}, {{hit2,blue}, 0}, {{block,blue}, 1},
+    {{hit,green}, 3}, {{hit2,green}, 0}, {{block,green}, 1},
+    {{hit, red}, 4}, {{hit2, red}, 0}, {{block, red}, 1},
+    {base, 6}, {clear, 5}, {reverse, 0}, {double, 2}], [] ),
   lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
 create_deck("tamiya") ->
   Deck = build_deck_from_def([{{hit, blue}, 3}, {{hit2,blue}, 1}, {{block,blue}, 2},
@@ -35,8 +136,11 @@ create_deck("tamiya") ->
     {base, 3}, {clear, 5}, {reverse, 1}], [] ),
   lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze]);
 create_deck(DeckName) ->
-  io:format("No deck matching ~s, going with default~n", [DeckName]),
-  create_deck("darwin").
+  Decks = decks(),
+  RandomDeck = random:uniform(length(Decks)),
+  RandomDeckName = get_index(Decks, RandomDeck),
+  io:format("No deck matching ~s, going with random: ~s~n", [DeckName, RandomDeckName]),
+  create_deck(RandomDeckName).
 
 add_card(_, Deck, 0) ->
   Deck;
