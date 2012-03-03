@@ -5,6 +5,7 @@
  view: true,
  document: true,
  WebSocket: true,
+ MozWebSocket: true,
  gameState: true,
  window: true
 */

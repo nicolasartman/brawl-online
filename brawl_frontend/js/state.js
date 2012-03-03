@@ -14,7 +14,7 @@ var gameState = (function () {
   var self = {}
   
   // Private vars
-  var state = {}, gameID, playerID
+  var state = {}, gameID
   
   /*
    * Public - Sets the entire game state to the passed in object.

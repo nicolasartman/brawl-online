@@ -19,22 +19,6 @@ div {
   box-shadow: 0px 0px 10px #000000; /* Standard. Opera 10.5, IE9 */
 }
 
-.player-deck-name {
-  position: absolute;
-  width: 100px;
-  font-family: sans-serif;
-  font-size: 1.4em;
-  height: 2em;
-}
-
-#player-1-deck-name {
-  float: left;
-}
-
-#player-2-deck-name {
-  float: right;
-}
-
 #game-id {
   position: absolute;
   top: 36px;
