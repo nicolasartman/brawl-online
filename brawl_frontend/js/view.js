@@ -189,6 +189,7 @@ var view = (function () {
    * Public - Prompts the player to start a new game or choose an existing one
   */
   var showChooseGameDialog = function () {
+    clearNotification()
     $('#choose-game-dialog').fadeIn(200)
   }
   self.showChooseGameDialog = showChooseGameDialog
@@ -198,7 +199,7 @@ var view = (function () {
   */
   var showChoosePlayerTypeDialog = function () {
     // prompt for player type
-    $('#connecting-notification').slideUp(200)
+    clearNotification()
     $('#choose-player-type-dialog').fadeIn(200);
   }
   self.showChoosePlayerTypeDialog = showChoosePlayerTypeDialog
@@ -210,6 +211,15 @@ var view = (function () {
     $('#play-area').show(500)
   }
   self.showPlayArea = showPlayArea
+
+  /*
+   * Public - Sets the labels for the decks for both players
+  */
+  var setPlayerDeckNames = function (p1DeckName, p2DeckName) {
+    $('#player-1-deck-name').text(p1DeckName)
+    $('#player-2-deck-name').text(p2DeckName)
+  }
+  self.setPlayerDeckNames = setPlayerDeckNames
 
   return self
 }())

@@ -69,6 +69,7 @@ $(document).ready(function ($) {
       
       // Reveal the playing area
       view.showPlayArea()
+      view.setPlayerDeckNames(message.data.player1Deck, message.data.player2Deck)
 
       // Render the initial game and go!
       gameState.setState(message.data.gameState)
