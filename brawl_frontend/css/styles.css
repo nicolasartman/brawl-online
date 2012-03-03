@@ -101,8 +101,6 @@ div {
   background-color: #888;
 }
 
-
-
 #connecting-notification {
   display: none;
   position: absolute;
@@ -137,7 +135,7 @@ div {
 
 .card {
   font: 1em "Impact", "Trebuchet MS", Verdana, sans-serif;
-/*  font-weight: bold;*/
+  position: relative;
   background-color: #DDD;
   border: 2px solid #999;
   width: 90px;
@@ -161,11 +159,11 @@ div {
 }
 
 .cardLabelMiddle {
-  position:absolute;
+  position: absolute;
   height: 20px;
   top: 50%;
   width:100%;
-  text-align:center;
+  text-align: center;
   margin-top: -10px;
 }
 
