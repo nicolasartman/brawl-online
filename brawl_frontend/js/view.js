@@ -137,7 +137,11 @@ var view = (function () {
         callbacks.sendJoin($(event.target).attr("choice"), character)
       }
       // Trigger the next dialog
-      showChooseCharacterDialog()
+      if ($(event.target).attr("choice") !== "spectator") {
+        showChooseCharacterDialog() 
+      } else {
+        showPlayArea()
+      }
     })
     
     // Choose character dialog
