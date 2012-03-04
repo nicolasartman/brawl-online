@@ -29,11 +29,12 @@ $(document).ready(function ($) {
         gameID: gameID
       }))
     },
-    sendJoin: function (playerType) {
+    sendJoin: function (playerType, playerCharacter) {
       view.showNotification('joining game...')
       socket.send(JSON.stringify({
         messageType: "join",
         playerType: playerType,
+        deck: playerCharacter,
         gameID: gameState.getGameID()
       }))
     },

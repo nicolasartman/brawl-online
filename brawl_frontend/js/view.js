@@ -127,15 +127,30 @@ var view = (function () {
       }
     })
     
+    // For passing along the continuation from player type dialog to character dialog
+    var sendJoinMessage;
+    
     // Choose player type dialog
     $('#choose-player-type-dialog .player-type-choice').click(function (event) {
       $('#choose-player-type-dialog').fadeOut(200)
-      callbacks.sendJoin($(event.target).attr("choice"))
+      sendJoinMessage = function (character) {
+        callbacks.sendJoin($(event.target).attr("choice"), character)
+      }
+      // Trigger the next dialog
+      showChooseCharacterDialog()
+    })
+    
+    // Choose character dialog
+    $('#choose-character-dialog .choice').click(function (event) {
+      $('#choose-character-dialog').fadeOut(200)
+      console.log($(event.target).attr("id"))
+      sendJoinMessage($(event.target).attr("id"))
     })
     
     // Choose new game or join existing game dialog
     $('#new-game').click(function (event) {
       $('#choose-game-dialog').fadeOut(200)
+      // $.get('http://ps86615.dreamhostps.com/brawl/new_game', function (data, textStatus, xhr) {
       $.get('http://' + window.location.host + '/brawl/new_game', function (data, textStatus, xhr) {
         var gameID = JSON.parse(data)["GameId:"]
 
@@ -203,6 +218,16 @@ var view = (function () {
     $('#choose-player-type-dialog').fadeIn(200);
   }
   self.showChoosePlayerTypeDialog = showChoosePlayerTypeDialog
+
+  /*
+   * Public - Promps the player to choose a character (deck) to use
+  */
+  var showChooseCharacterDialog = function () {
+    // prompt for character
+    clearNotification()
+    $('#choose-character-dialog').fadeIn(200);
+  }
+  self.showChooseCharacterDialog = showChooseCharacterDialog
 
   /*
    * Public - Shows the play area to the user
