@@ -32,7 +32,7 @@ var view = (function () {
         if (modifiers) { modifiers = '<br>(' + modifiers + ')' }
         
         return $('<div />', {
-          "class": "base card",
+          "class": "base card none",
           html: ("base" + modifiers)
         })
       }
