@@ -23,59 +23,6 @@ var gameState = (function () {
   var setState = function (gameState) {
     if (!gameState) {
       console.log("Null or undefined game state passed in, using test state");
-      gameState = {
-        bases: [
-          {
-            id: 1,
-            modifiers: [
-            ],
-            P1: [
-              {
-                cardType: "hit",
-                color: "blue"
-              },
-              {
-                cardType: "hit",
-                color: "blue"
-              },
-              {
-                cardType: "block",
-                color: "blue"
-              }
-            ],
-            P2: [
-              {
-                cardType: "hit",
-                color: "red"
-              },
-              {
-                cardType: "hit-2",
-                color: "red"
-              }
-            ]
-          }
-        ],
-        P1: {
-          hand: {
-            cardType: "hit",
-            color: "green"
-          },
-          discard: {
-              cardType: "hit",
-              color: "blue"
-          }
-        },
-        P2: {
-          hand: {
-            cardType: "hit",
-            color: "red"
-          },
-          discard: {
-              cardType: "hit",
-              color: "yellow"
-          }
-        }
-      }
     }
     state = gameState
   }

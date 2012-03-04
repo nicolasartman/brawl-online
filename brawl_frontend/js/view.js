@@ -33,7 +33,7 @@ var view = (function () {
         
         return $('<div />', {
           "class": "base card",
-          html: ("<div class='cardLabelMiddle'>" + "base" + modifiers + "</div>")
+          html: ("base" + modifiers)
         })
       }
 

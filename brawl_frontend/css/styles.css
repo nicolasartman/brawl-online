@@ -27,7 +27,7 @@ div {
 }
 
 #play-area {
-  display: none;
+/*  display: none;*/
   background-color: #222;
   width: 1000px;
   height: 700px;
@@ -158,38 +158,51 @@ div {
   margin-right: 50px;
 }
 
+/* default/blank card */
 .card {
   font: 1em "Impact", "Trebuchet MS", Verdana, sans-serif;
+  border: 2px dotted #999;
+  color: #CCC;
   position: relative;
-  background-color: #DDD;
-  border: 2px solid #999;
   width: 90px;
   height: 120px;
+  line-height: 120px;
+  text-align: center;
 }
 
-.card.base {
+/* card colors */
+.red, .blue, .green, .none {
+  border: 2px solid #999;
+  color: #000;
+}
+
+.red {
+  background-color: #EB060B;
+}
+
+.blue {
+  background-color: #375EC3;
+}
+
+.green {
+  background-color: #7AB317;
+}
+
+.none {
+  background-color: #DDD;
+}
+
+
+.base.card {
   margin-top: -60px;
 }
 
 /* A card in a lane */
 .lane .card {
+  position: absolute;
   left:50%;
   margin-left: -45px;
-  position: absolute;
   top: 50%;
-}
-
-.cardLabelTop {
-
-}
-
-.cardLabelMiddle {
-  position: absolute;
-  height: 20px;
-  top: 50%;
-  width:100%;
-  text-align: center;
-  margin-top: -10px;
 }
 
 .cardLabelBottom {
@@ -229,18 +242,3 @@ div {
   float: bottom;
 }
 
-/* =============== */
-/* = Card Colors = */
-/* =============== */
-
-.red {
-  background-color: #EB060B;
-}
-
-.blue {
-  background-color: #375EC3;
-}
-
-.green {
-  background-color: #7AB317;
-}
