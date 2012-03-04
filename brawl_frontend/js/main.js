@@ -14,6 +14,9 @@ $(document).ready(function ($) {
   "use strict";
   var socket
   
+  /* debug mode */
+  var debug = window.location.href.indexOf("debug") !== -1 ? true : false
+  
   try {
     socket = new WebSocket("ws://" + window.location.host + ":8080/play")
   } catch (e) {
@@ -55,7 +58,7 @@ $(document).ready(function ($) {
   }
   socket.onmessage = function(msg) {
     var message = JSON.parse(msg.data);
-    console.log(message)
+    if (debug) { console.log(message) }
 
     if (message.messageType === "connected") {
       view.displayGameID()
