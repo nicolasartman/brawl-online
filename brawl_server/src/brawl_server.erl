@@ -78,18 +78,30 @@ handle_call(stop, _From, Game) ->
 handle_call({join, Player, Deck}, _From, Game) ->
   case Player of
     player1 ->
+      NewDeck = case Game#brawl_game.state of
+        none ->
+          Deck;
+        _InProgress  ->
+          Game#brawl_game.player1deck
+      end,
       case Game#brawl_game.player1 of
         none ->
           Id=brawl:generate_id(),
-          {reply, Id, Game#brawl_game{player1deck=Deck, player1=Id}};
+          {reply, Id, Game#brawl_game{player1deck=NewDeck, player1=Id}};
         _ ->
           {reply, {error, already_joined}, Game}
       end;
     player2 ->
+      NewDeck = case Game#brawl_game.state of
+        none ->
+          Deck;
+        _InProgress  ->
+          Game#brawl_game.player2deck
+      end,
       case Game#brawl_game.player2 of
         none ->
           Id=brawl:generate_id(),
-          {reply, Id, Game#brawl_game{player2deck=Deck, player2=Id}};
+          {reply, Id, Game#brawl_game{player2deck=NewDeck, player2=Id}};
         _ ->
           {reply, {error, already_joined}, Game}
       end;
