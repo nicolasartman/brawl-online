@@ -50,26 +50,25 @@ div {
 }
 
 #choose-character-dialog {
-  display: block;
-  width: 600px;
-  height: 600px;
-  margin-left: -300px;
-  margin-top: -300px;
+  width: 500px;
+  height: 450px;
+  margin-left: -250px;
+  margin-top: -225px;
 }
 
 #choose-character-dialog .choice {
-  float: left;
-  margin-right: 15px;
-  margin-left: 15px;
+  margin-right: 10px;
+  margin-left: 10px;
   margin-bottom: 20px;
-  line-height: 80px;
-  width: 100px;
-  height: 80px;
+  line-height: 60px;
+  width: 90px;
+  height: 60px;
 }
 
 #choose-character-dialog #character-roster {
   width: 100%;
-  margin-left: 20px;
+  margin-top: 40px;
+  margin-left: 30px;
 }
 
 .title {

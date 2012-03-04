@@ -13,6 +13,7 @@
 $(document).ready(function ($) {
   "use strict";
   var socket
+  
   try {
     socket = new WebSocket("ws://" + window.location.host + ":8080/play")
   } catch (e) {
