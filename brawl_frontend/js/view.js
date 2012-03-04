@@ -166,6 +166,19 @@ var view = (function () {
     $('#existing-game-container input').focus(function(event) {
       $(this).val("")
     })
+    
+    /* Keyboard shortcuts */
+    $(window.document).keydown(function (event) {
+      if (event.which === 65) {
+        $('#P1Deck').click()
+      }
+      else if (event.which === 81) {
+        $('#P1Discard').click()
+      }
+      else if (event.which === 71) {
+        $('#P1Hand').click()
+      }
+    })
   }
   self.init = init
 
