@@ -97,13 +97,91 @@ var view = (function () {
   }
   self.render = render
 
+
+  /*
+   * Public - shows a notification
+  */
+  var showNotification = function (notificationType) {
+    $('#connecting-notification').slideUp(200)
+    if (notificationType === 'connecting') {
+      // Show the connecting message
+      $('#connecting-notification').slideDown(200)
+    } 
+    else {
+      $('#connecting-notification').text(notificationType).slideDown(200)
+    }
+  }
+  self.showNotification = showNotification
+
+  /*
+   * Public - clears notification
+  */
+  var clearNotification = function () {
+    $('#connecting-notification').slideUp(200)
+  }
+  self.clearNotification = clearNotification
+
+  /*
+   * Public - Displays the current game id to all connected players
+  */
+  var displayGameID = function () {
+    $('#game-id').text("Game ID: " + gameState.getGameID() + " ")
+  }
+  self.displayGameID = displayGameID
+
+  /*
+   * Public - Prompts the player to start a new game or choose an existing one
+  */
+  var showChooseGameDialog = function () {
+    clearNotification()
+    $('#choose-game-dialog').fadeIn(200)
+  }
+  self.showChooseGameDialog = showChooseGameDialog
+
+  /*
+   * Public - Promps the player to choose player1, player2, or spectator
+  */
+  var showChoosePlayerTypeDialog = function () {
+    // prompt for player type
+    clearNotification()
+    $('#choose-player-type-dialog').fadeIn(200);
+  }
+  self.showChoosePlayerTypeDialog = showChoosePlayerTypeDialog
+
+  /*
+   * Public - Promps the player to choose a character (deck) to use
+  */
+  var showChooseCharacterDialog = function () {
+    // prompt for character
+    clearNotification()
+    $('#choose-character-dialog').fadeIn(200);
+  }
+  self.showChooseCharacterDialog = showChooseCharacterDialog
+
+  /*
+   * Public - Shows the play area to the user
+  */
+  var showPlayArea = function () {
+    $('#play-area').show(500)
+  }
+  self.showPlayArea = showPlayArea
+
+  /*
+   * Public - Sets the labels for the decks for both players
+  */
+  var setPlayerDeckNames = function (p1DeckName, p2DeckName) {
+    $('#P1Deck').text(p1DeckName)
+    $('#P2Deck').text(p2DeckName)
+  }
+  self.setPlayerDeckNames = setPlayerDeckNames
+
   /*
    * Public - Initializes the view
   */
   var init = function (callbacks) {
     // Play on top/bottom of lane when the lane or the lane itself is clicked
     $('.lane').click(function (event) {
-      // Ignore clicked base events and allow them to keep bubbling up
+      // Ignore clicked base cards and allow the click to keep bubbling up
       if (!$(event.target).hasClass("base")) {
         console.log("Clicked lane")
 
@@ -182,83 +260,6 @@ var view = (function () {
     })
   }
   self.init = init
-
-  /*
-   * Public - shows a notification
-  */
-  var showNotification = function (notificationType) {
-    $('#connecting-notification').slideUp(200)
-    if (notificationType === 'connecting') {
-      // Show the connecting message
-      $('#connecting-notification').slideDown(200)
-    } 
-    else {
-      $('#connecting-notification').text(notificationType).slideDown(200)
-    }
-  }
-  self.showNotification = showNotification
-
-  /*
-   * Public - clears notification
-  */
-  var clearNotification = function () {
-    $('#connecting-notification').slideUp(200)
-  }
-  self.clearNotification = clearNotification
-
-  /*
-   * Public - Displays the current game id to all connected players
-  */
-  var displayGameID = function () {
-    $('#game-id').text("Game ID: " + gameState.getGameID() + " ")
-  }
-  self.displayGameID = displayGameID
-
-  /*
-   * Public - Prompts the player to start a new game or choose an existing one
-  */
-  var showChooseGameDialog = function () {
-    clearNotification()
-    $('#choose-game-dialog').fadeIn(200)
-  }
-  self.showChooseGameDialog = showChooseGameDialog
-
-  /*
-   * Public - Promps the player to choose player1, player2, or spectator
-  */
-  var showChoosePlayerTypeDialog = function () {
-    // prompt for player type
-    clearNotification()
-    $('#choose-player-type-dialog').fadeIn(200);
-  }
-  self.showChoosePlayerTypeDialog = showChoosePlayerTypeDialog
-
-  /*
-   * Public - Promps the player to choose a character (deck) to use
-  */
-  var showChooseCharacterDialog = function () {
-    // prompt for character
-    clearNotification()
-    $('#choose-character-dialog').fadeIn(200);
-  }
-  self.showChooseCharacterDialog = showChooseCharacterDialog
-
-  /*
-   * Public - Shows the play area to the user
-  */
-  var showPlayArea = function () {
-    $('#play-area').show(500)
-  }
-  self.showPlayArea = showPlayArea
-
-  /*
-   * Public - Sets the labels for the decks for both players
-  */
-  var setPlayerDeckNames = function (p1DeckName, p2DeckName) {
-    $('#P1Deck').text(p1DeckName)
-    $('#P2Deck').text(p2DeckName)
-  }
-  self.setPlayerDeckNames = setPlayerDeckNames
 
   return self
 }())
