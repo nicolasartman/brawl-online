@@ -169,13 +169,10 @@ var view = (function () {
     
     /* Keyboard shortcuts */
     $(window.document).keydown(function (event) {
-      if (event.which === 65) {
+      if (event.which === 65 || event.which === 186) {
         $('#P1Deck').click()
       }
-      else if (event.which === 81) {
-        $('#P1Discard').click()
-      }
-      else if (event.which === 71) {
+      else if (event.which === 81 || event.which === 80) {
         $('#P1Hand').click()
       }
     })
