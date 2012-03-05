@@ -155,8 +155,11 @@ var view = (function (us) {
             
             while (cardNumber < cardsInStack) {
               cardData = stack[cardNumber]
-              stackUI.eq(cardNumber).html("<div class='cardLabelTop'>" + cardData.cardType + "</div>" +
-                     "<div class='cardLabelBottom'>" + cardData.cardType + "</div>").addClass(cardData.color)
+              stackUI.eq(cardNumber)
+                     .html("<div class='cardLabelTop'>" + cardData.cardType + "</div>" +
+                            "<div class='cardLabelBottom'>" + cardData.cardType + "</div>")
+                     .addClass(cardData.color)
+                     .show()
               
               cardNumber++
             }            

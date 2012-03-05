@@ -225,6 +225,11 @@ div {
 /*  margin-top: -500px; */
 }
 
+/* Hide the cards in the lanes until they are 'rendered' */
+.lane > .card {
+  display: none;
+}
+
 #lanes {
   position: absolute;
   top: 50%;
