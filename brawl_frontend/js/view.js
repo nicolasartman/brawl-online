@@ -1,13 +1,14 @@
 /*global
  jquery:true,
  $:true,
+ _: true,
  us: true,
  gameState: true,
  window: true */
 
 var us = _.noConflict();
 
-var view = (function () {
+var view = (function (us) {
   "use strict";
   var self = {}
 
@@ -103,31 +104,72 @@ var view = (function () {
    * Public - Updates the view to gameState passed in, attempting to alter
    * only what has changed since the last update
   */
-  var update = function (newState) {
-    var state = newState || gameState.getState()
-
+  var update = function (state) {
+    console.log("GameState:")
+    console.log(state)
     function updateHandsAndDiscards () {
       var playerData
+      
       us.each(["player-1", "player-2"], function (playerName, playerNumber) {
-        playerData = state["P" + playerNumber] // TODO: update naming to fix convention
-          us.each(["hand", "discard"], function (position) {
+        playerData = state["p" + playerNumber] // TODO: update naming to fix convention
+        
+        us.each(["hand", "discard"], function (position) {
           var positionUIElement = $("#" + playerName + "-" + position)
           // Clear old card color
-          .removeClass('red blue green none')
+          positionUIElement.removeClass('red blue green none')
+          // If there's a card in that position, show it, otherwise show the placeholder
           if (playerData[position]) {
             // Set new color
-            $("#" + playerName + "-" + position).addClass(playerData[position.toLowerCase()].color)
+            positionUIElement.addClass(playerData[position.toLowerCase()].color)
             // Set card type label
-            $("#" + playerName + "-"  + position).text(playerData[position.toLowerCase()].cardType)
+            positionUIElement.text(playerData[position.toLowerCase()].cardType)
           } else {
             // Clear card type label
-            $("#" + playerName + "-"  + position).text(position)
+            positionUIElement.text(position)
           }
         })
       })
     }
     
+    function updateLanes () {
+      $('.lane').each(function (currentLaneNumber) {
+        var currentLaneUI = $(this)
+        if (state.bases.length >= currentLaneNumber) {
+          // update the base
+          currentLaneUI.find(".base").text("base<br>(" + 
+            us.reduce(state.bases[currentLaneNumber].modifiers, function (memo, card) {
+              return memo + card.cardType.charAt(0) + card.cardType.charAt(1) + ","
+            }, "") + ")"
+          )
+          
+          // update the stacks
+          us.each(['p1', 'p2'], function (stackDirection) {
+            // Get the first empty card spot and start updating from there.
+            // Since the only thing a player can do is add cards to a stack,
+            // there's no need to bother with anything that was already rendered
+            var stackUI = currentLaneUI.children(stackDirection + "stack")
+            var cardNumber = stackUI.filter(":visible").length - 1
+            var stack = state.bases[currentLaneNumber][stackDirection]
+            var cardsInStack = stack.length
+            var cardData
+            
+            while (cardNumber < cardsInStack) {
+              cardData = stack[cardNumber]
+              stackUI.eq(cardNumber).html("<div class='cardLabelTop'>" + cardData.cardType + "</div>" +
+                     "<div class='cardLabelBottom'>" + cardData.cardType + "</div>").addClass(cardData.color)
+              
+              cardNumber++
+            }            
+          })
+        } else {
+          $(this).find(".card").hide().removeClass("red blue green none")
+        }
+      })
+    }
+    
     updateHandsAndDiscards()
+    updateLanes()
+
   }
   self.update = update
 
@@ -157,8 +199,8 @@ var view = (function () {
   /*
    * Public - Displays the current game id to all connected players
   */
-  var displayGameID = function () {
-    $('#game-id').text("Game ID: " + gameState.getGameID() + " ")
+  var displayGameID = function (gameID) {
+    $('#game-id').text("Game ID: " + gameID + " ")
   }
   self.displayGameID = displayGameID
 
@@ -263,9 +305,11 @@ var view = (function () {
     // Choose new game or join existing game dialog
     $('#new-game').click(function (event) {
       $('#choose-game-dialog').fadeOut(200)
-      // $.get('http://ps86615.dreamhostps.com/brawl/new_game', function (data, textStatus, xhr) {
       $.get('http://' + window.location.host + '/brawl/new_game', function (data, textStatus, xhr) {
         var gameID = JSON.parse(data)["GameId:"]
+        
+        // Show the gameID to the user so they can send it to friends
+        displayGameID(gameID)
 
         // TODO: fix key so it's gameID
         callbacks.sendConnect(gameID)
@@ -297,4 +341,4 @@ var view = (function () {
   self.init = init
 
   return self
-}())
+}(us))
