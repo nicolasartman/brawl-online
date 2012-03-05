@@ -71,7 +71,6 @@ $(document).ready(function ($) {
     if (debug) { console.log(message) }
 
     if (message.messageType === "connected") {
-      view.displayGameID()
       view.clearNotification()
       view.showChoosePlayerTypeDialog() // triggers a join event after prompting them
     }
