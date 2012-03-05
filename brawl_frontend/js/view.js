@@ -323,6 +323,10 @@ var view = (function (us) {
     $('#existing-game').click(function (event) {
       var gameID = $('#existing-game-container input').val()
       $('#choose-game-dialog').fadeOut(200)
+
+      // Show the gameID to the user so they can send it to friends
+      displayGameID(gameID)
+
       callbacks.sendConnect(gameID)
     })
     $('#existing-game-container input').focus(function(event) {
