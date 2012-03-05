@@ -1,0 +1,147 @@
+// ===========================
+// = Messages sent to server =
+// ===========================
+
+// Connect
+{
+  "messageType": "connect"
+  "data": gameID
+}
+
+// Join
+{
+  "messageType": "join",
+  "data": {
+    "gameID": number,
+    "playerType": "player1" | "player2",
+    "deck": string
+  }
+}
+
+// Card Move
+{
+  "messageType": "card_move",
+  "data": {
+    "from" : location,
+    "to" : location,
+    "toBase" : number,
+    "gameID" : number,
+    "playerID": number
+  }
+}
+
+// Get game state
+{
+  "messageType": "get_game_state"
+}
+
+
+// =================================
+// = Messages returned from server =
+// =================================
+
+// Error
+{
+  "messageType": "error",
+  "data": {
+    "errorMessage": string,
+    "errorType": <short error message>
+  }
+}
+
+// Error Types: join_failed | game_not_found
+
+// Connected
+{
+  "messageType": "connected",
+  "data": {
+    // true means open
+    "player1": boolean,
+    "player2": boolean,
+    "decks": [ <list of deck names as strings> ]
+  }
+}
+
+// Joined
+{
+  "messageType": "joined",
+  "data": {
+   "playerID": playerID
+  }
+}
+
+// Started
+{
+  "messageType": "started",
+  "data": {
+   "gameState": gamestate
+  }
+}
+
+// Game State
+{
+  "messageType": "game_state"
+  "data": {
+    "gameState": gamestate
+  }
+}
+
+// Game over
+{
+  "messageType": "game_over"
+  "data": {
+    "winner": <string>,
+    // optional other data
+  }
+}
+
+// Used in case a player disconnects, can implement later
+{
+  "messageType": "pause"å
+}
+
+// Used after an opponent reconnects, can implement later
+{
+  "messageType": "resume"
+}
+
+// ===================
+// = Data Structures =
+// ===================
+
+location = "deck"
+         | "discard"
+         | "hand"
+         | "base"
+         | "base_p1"
+         | "base_p2"
+         | "base_left"
+         | "base_right"
+
+gameState: {
+  bases: [
+    {
+      id: <number>
+      modifiers: [
+        <card>
+      ]
+      P1: [<card>]
+      P2: [<card>]
+    }
+  ],
+  P1: {
+    hand: <card>,
+    discard: <card>
+  }
+  P2: {
+    hand: <card>,
+    discard: <card>
+  }
+}
+
+card: {
+  color: "red | green | blue | none",
+  cardType: "hit", "hit-2", "block", "press", "hold", "double", "reverse", "base"
+  // value: <number>
+  // character: "",
+}
