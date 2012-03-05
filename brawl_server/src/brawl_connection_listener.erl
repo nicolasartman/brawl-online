@@ -294,9 +294,9 @@ card_stack_to_json_form([CardType | CardStack], JsonCardStack) ->
 
 base_to_json_form({BaseId, P1, Mods, P2}) ->
   {[ {<<"id">>, BaseId}, 
-     {<<"P1">>, card_stack_to_json_form(P1) },
+     {<<"p1">>, card_stack_to_json_form(P1) },
      {<<"modifiers">>, card_stack_to_json_form(Mods) },
-     {<<"P2">>, card_stack_to_json_form(P2) } ]}.
+     {<<"p2">>, card_stack_to_json_form(P2) } ]}.
 
 bases_to_json_form(Bases) ->
   { <<"bases">>, bases_to_json_form(Bases, []) }.
@@ -318,11 +318,11 @@ discard_to_json_form([Card | _Cards]) ->
 game_to_json_form({ Bases, { P1Hand, P1Discard }, { P2Hand, P2Discard } }) ->
   io:format("Encoding game~n"),
   JSON_Form = {<<"gameState">>, {[ bases_to_json_form(Bases), 
-    {<<"P1">>, 
+    {<<"p1">>, 
       {[ { <<"hand">>, hand_to_json_form(P1Hand)},
        { <<"discard">>, discard_to_json_form(P1Discard)}
        ]} },
-    {<<"P2">>, 
+    {<<"p2">>, 
       {[ { <<"hand">>, hand_to_json_form(P2Hand)},
        { <<"discard">>, discard_to_json_form(P2Discard)}
        ]} }
