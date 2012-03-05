@@ -57,7 +57,8 @@ $(document).ready(function ($) {
     },
     sendRequestGameState: function () {
       socket.send(JSON.stringify({
-        gameID: gameID
+        gameID: gameID,
+        messageType: "request_game_state"
       }))
     }
   })
