@@ -242,6 +242,8 @@ div {
 }
 
 .base {
+  /* TODO: fix this hack */
+  line-height: 16px;
   float: center;
 }
 

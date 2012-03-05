@@ -111,7 +111,7 @@ var view = (function (us) {
       var playerData
       
       us.each(["player-1", "player-2"], function (playerName, playerNumber) {
-        playerData = state["p" + playerNumber] // TODO: update naming to fix convention
+        playerData = state["p" + (playerNumber + 1)] // TODO: update naming to fix convention
         
         us.each(["hand", "discard"], function (position) {
           var positionUIElement = $("#" + playerName + "-" + position)
@@ -134,21 +134,23 @@ var view = (function (us) {
     function updateLanes () {
       $('.lane').each(function (currentLaneNumber) {
         var currentLaneUI = $(this)
-        if (state.bases.length >= currentLaneNumber) {
+        if (currentLaneNumber < state.bases.length ) {
           // update the base
-          currentLaneUI.find(".base").text("base<br>(" + 
+          currentLaneUI.find(".base")
+          .html("base<br>(" + 
             us.reduce(state.bases[currentLaneNumber].modifiers, function (memo, card) {
               return memo + card.cardType.charAt(0) + card.cardType.charAt(1) + ","
-            }, "") + ")"
-          )
+            }, "") + ")" )
+          .attr('baseid', state.bases[currentLaneNumber].id)
+          .show()
           
           // update the stacks
           us.each(['p1', 'p2'], function (stackDirection) {
             // Get the first empty card spot and start updating from there.
             // Since the only thing a player can do is add cards to a stack,
             // there's no need to bother with anything that was already rendered
-            var stackUI = currentLaneUI.children(stackDirection + "stack")
-            var cardNumber = stackUI.filter(":visible").length - 1
+            var stackUI = currentLaneUI.children("." + stackDirection + "stack")
+            var cardNumber = stackUI.filter(":visible").length
             var stack = state.bases[currentLaneNumber][stackDirection]
             var cardsInStack = stack.length
             var cardData
@@ -165,7 +167,7 @@ var view = (function (us) {
             }            
           })
         } else {
-          $(this).find(".card").hide().removeClass("red blue green none")
+          $(this).find(".card").hide().not(".base").removeClass("red blue green none")
         }
       })
     }
