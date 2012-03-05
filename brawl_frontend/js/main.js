@@ -21,8 +21,8 @@ $(document).ready(function ($) {
   var debug = window.location.href.indexOf("debug") !== -1 ? true : false
   
   try {
-    // socket = new WebSocket("ws://ps86615.dreamhostps.com:8080/play")
-    socket = new WebSocket("ws://" + window.location.host + ":8080/play")
+    socket = new WebSocket("ws://ps86615.dreamhostps.com:8080/play")
+    // socket = new WebSocket("ws://" + window.location.host + ":8080/play")
   } catch (e) {
     socket = new MozWebSocket("ws://" + window.location.host + ":8080/play")
   }
@@ -88,13 +88,15 @@ $(document).ready(function ($) {
       view.setPlayerDeckNames(message.data.player1Deck, message.data.player2Deck)
 
       // Render the initial game and go!
-      gameState.setState(message.data.gameState)
-      view.render();
+      // gameState.setState(message.data.gameState)
+      // view.render();
+      view.update(message.data.gameState)
     }
     else if (message.messageType === "game_state") {
       // Update the game state and re-render
-      gameState.setState(message.data.gameState)
-      view.render();
+      // gameState.setState(message.data.gameState)
+      // view.render();
+      view.update(message.data.gameState)
     }
     else if (message.messageType === "game_over") {
       alert(message.data.winner + " wins!")
