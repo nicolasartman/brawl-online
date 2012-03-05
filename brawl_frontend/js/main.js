@@ -14,10 +14,14 @@ $(document).ready(function ($) {
   "use strict";
   var socket
   
+  /* the only "state" var */
+  var gameID
+  
   /* debug mode */
   var debug = window.location.href.indexOf("debug") !== -1 ? true : false
   
   try {
+    // socket = new WebSocket("ws://ps86615.dreamhostps.com:8080/play")
     socket = new WebSocket("ws://" + window.location.host + ":8080/play")
   } catch (e) {
     socket = new MozWebSocket("ws://" + window.location.host + ":8080/play")
@@ -25,8 +29,8 @@ $(document).ready(function ($) {
 
   // Initialize view actions so the view can send messages back through the socket
   view.init({
-    sendConnect: function (gameID) {
-      gameState.setGameID(gameID)
+    sendConnect: function (newGameID) {
+      gameID = newGameID
       view.showNotification('connecting')
       socket.send(JSON.stringify({
         messageType: "connect",
@@ -39,16 +43,21 @@ $(document).ready(function ($) {
         messageType: "join",
         playerType: playerType,
         deck: playerCharacter,
-        gameID: gameState.getGameID()
+        gameID: gameID
       }))
     },
     sendCardMove: function (from, to, baseID) {
       socket.send(JSON.stringify({
-        gameID:       gameState.getGameID(),
+        gameID:       gameID,
         messageType:  "card_move",
         from:         from,
         to:           to,
         toBase:       baseID
+      }))
+    },
+    sendRequestGameState: function () {
+      socket.send(JSON.stringify({
+        gameID: gameID
       }))
     }
   })
@@ -90,7 +99,7 @@ $(document).ready(function ($) {
       alert(message.data.winner + " wins!")
       socket.send(JSON.stringify({
         messageType: "new_game",
-        gameID: gameState.getGameID()
+        gameID: gameID
       }))
     }
     else if (message.messageType === "pause") {
