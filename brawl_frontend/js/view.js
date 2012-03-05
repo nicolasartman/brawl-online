@@ -5,6 +5,8 @@
  gameState: true,
  window: true */
 
+var us = _.noConflict();
+
 var view = (function () {
   "use strict";
   var self = {}
