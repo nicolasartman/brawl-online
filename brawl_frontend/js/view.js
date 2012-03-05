@@ -28,9 +28,9 @@ var view = (function () {
         var modifiers = us.reduce(modifierCards, function (memo, card) {
           return memo + card.cardType.charAt(0) + card.cardType.charAt(1) + ","
         }, "")
-        
+
         if (modifiers) { modifiers = '<br>(' + modifiers + ')' }
-        
+
         return $('<div />', {
           "class": "base card none",
           html: ("base" + modifiers)
@@ -97,6 +97,37 @@ var view = (function () {
   }
   self.render = render
 
+  /*
+   * Public - Updates the view to gameState passed in, attempting to alter
+   * only what has changed since the last update
+  */
+  var update = function (newState) {
+    var state = newState || gameState.getState()
+
+    function updateHandsAndDiscards () {
+      var playerData
+      us.each(["player-1", "player-2"], function (playerName, playerNumber) {
+        playerData = state["P" + playerNumber] // TODO: update naming to fix convention
+          us.each(["hand", "discard"], function (position) {
+          var positionUIElement = $("#" + playerName + "-" + position)
+          // Clear old card color
+          .removeClass('red blue green none')
+          if (playerData[position]) {
+            // Set new color
+            $("#" + playerName + "-" + position).addClass(playerData[position.toLowerCase()].color)
+            // Set card type label
+            $("#" + playerName + "-"  + position).text(playerData[position.toLowerCase()].cardType)
+          } else {
+            // Clear card type label
+            $("#" + playerName + "-"  + position).text(position)
+          }
+        })
+      })
+    }
+    
+    updateHandsAndDiscards()
+  }
+  self.update = update
 
   /*
    * Public - shows a notification
@@ -106,7 +137,7 @@ var view = (function () {
     if (notificationType === 'connecting') {
       // Show the connecting message
       $('#connecting-notification').slideDown(200)
-    } 
+    }
     else {
       $('#connecting-notification').text(notificationType).slideDown(200)
     }
@@ -183,8 +214,6 @@ var view = (function () {
     $('.lane').click(function (event) {
       // Ignore clicked base cards and allow the click to keep bubbling up
       if (!$(event.target).hasClass("base")) {
-        console.log("Clicked lane")
-
         callbacks.sendCardMove("hand",
           ((event.pageY - $(this).offset().top < $(this).height() / 2) ? "base_p1" : "base_p2"),
           ($(this).find('div.base').first().attr('baseid')))
@@ -194,7 +223,7 @@ var view = (function () {
     $('#play-area').click(function (event) {
       // Catch bubbled up card events
       if ($(event.target).hasClass('card')) {
-        callbacks.sendCardMove($(event.target).attr("fromLocation"), 
+        callbacks.sendCardMove($(event.target).attr("fromLocation"),
                      $(event.target).attr("toLocation"),
                      $(event.target).attr("baseid"))
       }
@@ -204,10 +233,10 @@ var view = (function () {
         callbacks.sendCardMove("hand", to)
       }
     })
-    
+
     // For passing along the continuation from player type dialog to character dialog
     var sendJoinMessage;
-    
+
     // Choose player type dialog
     $('#choose-player-type-dialog .player-type-choice').click(function (event) {
       $('#choose-player-type-dialog').fadeOut(200)
@@ -216,19 +245,19 @@ var view = (function () {
       }
       // Trigger the next dialog
       if ($(event.target).attr("choice") !== "spectator") {
-        showChooseCharacterDialog() 
+        showChooseCharacterDialog()
       } else {
+        callbacks.sendRequestGameState()
         showPlayArea()
       }
     })
-    
+
     // Choose character dialog
     $('#choose-character-dialog .choice').click(function (event) {
       $('#choose-character-dialog').fadeOut(200)
-      console.log($(event.target).attr("id"))
       sendJoinMessage($(event.target).attr("id"))
     })
-    
+
     // Choose new game or join existing game dialog
     $('#new-game').click(function (event) {
       $('#choose-game-dialog').fadeOut(200)
@@ -248,7 +277,7 @@ var view = (function () {
     $('#existing-game-container input').focus(function(event) {
       $(this).val("")
     })
-    
+
     /* Keyboard shortcuts */
     $(window.document).keydown(function (event) {
       if (event.which === 65 || event.which === 186) {
@@ -256,6 +285,10 @@ var view = (function () {
       }
       else if (event.which === 81 || event.which === 80) {
         $('#P1Hand').click()
+      }
+      // TODO: remove
+      else if (event.which == 68) {
+        update()
       }
     })
   }

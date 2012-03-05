@@ -12,19 +12,19 @@
     </title>
   </head>
   <body>
-    <div class="box" id="play-area">
-      <div class="player-area" id="P1">
-        <div class="card" id="P1Hand"    fromLocation="discard" toLocation="hand">
+    <div id="play-area">
+      <div class="player-area" id="player-1-area">
+        <div class="card" id="player-1-hand"  fromLocation="discard" toLocation="hand">
           Hand
         </div>
-        <div class="card" id="P1Discard" fromLocation="hand" toLocation="discard">
+        <div class="card" id="player-1-discard" fromLocation="hand" toLocation="discard">
           Discard
         </div>
-        <div class="card" id="P1Deck"    fromLocation="deck" toLocation="hand">
+        <div class="card deck" id="player-1-deck"    fromLocation="deck" toLocation="hand">
           Deck
         </div>
       </div>
-      <div class="box" id="lanes">
+      <div id="lanes">
         <div class="lane">
           <div class="card" style="margin-top: -210px;"></div>
           <div class="card" style="margin-top: -240px;"></div>
@@ -42,19 +42,21 @@
         <div class="lane">
         </div>
       </div>
-      <div class="player-area" id="P2">
-        <div class="card" id="P2Hand"    fromLocation="discard" toLocation="hand">
+      <div class="player-area" id="player-2-area">
+        <div class="card" id="player-2-hand"    fromLocation="discard" toLocation="hand">
           Hand
         </div>
-        <div class="card" id="P2Discard" fromLocation="hand" toLocation="discard">
+        <div class="card" id="player-2-discard" fromLocation="hand" toLocation="discard">
           Discard
         </div>
-        <div class="card" id="P2Deck"    fromLocation="deck" toLocation="hand">
+        <div class="card deck" id="player-2-deck"    fromLocation="deck" toLocation="hand">
           Deck
         </div>
       </div>
     </div>
-    <!-- Dialogs and Notifications -->
+    <!-- ============================= -->
+    <!-- = Dialogs and Notifications = -->
+    <!-- ============================= -->
     <div class="notification" id="connecting-notification">
       Connecting to game...
     </div>

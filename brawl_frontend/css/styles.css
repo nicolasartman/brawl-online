@@ -3,19 +3,7 @@ body {
 }
 
 div {
-/*  border: 1px solid #09f;*/
-}
-
-/* Deprecated */
-.box {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  min-width: 40px;
-  min-height: 40px;
-  -moz-box-shadow: 0px 0px 10px #000000; /* FF3.5+ */
-  -webkit-box-shadow: 0px 0px 10px #000000; /* Saf3+, Chrome */
-  box-shadow: 0px 0px 10px #000000; /* Standard. Opera 10.5, IE9 */
+  /*  border: 1px solid #09f;*/
 }
 
 #game-id {
@@ -27,12 +15,19 @@ div {
 }
 
 #play-area {
-  display: none;
+/*  display: none;*/
+  position: absolute;
+  left: 50%;
+  top: 50%;
   background-color: #222;
   width: 1000px;
   height: 700px;
   margin-left: -500px;
   margin-top: -350px;
+
+  -moz-box-shadow: 0px 0px 10px #000000;
+  -webkit-box-shadow: 0px 0px 10px #000000;
+  box-shadow: 0px 0px 10px #000000;
 }
 
 .dialog {
@@ -157,12 +152,12 @@ div {
 /*  z-index: 5;*/
 }
 
-#P1 {
+#player-1-area {
   float: left;
   margin-left: 50px;
 }
 
-#P2 {
+#player-2-area {
   float: right;
   margin-right: 50px;
 }
@@ -232,6 +227,9 @@ div {
 }
 
 #lanes {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   margin-top: -300px;
   margin-left: -225px;
   height: 600px;
@@ -239,15 +237,8 @@ div {
   overflow: visible;
 }
 
-.P1Stack {
-  vertical-align: bottom;
-}
-
 .base {
   float: center;
 }
 
-.P2Stack {
-  float: bottom;
-}
 
