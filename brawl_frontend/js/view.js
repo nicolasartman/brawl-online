@@ -13,9 +13,10 @@ var view = (function (us) {
   var self = {}
 
   /*
-   * Public - Renders the entire game state
+   * DEPRECATED
   */
   var render = function() {
+    console.log("Render is Deprecated, Do Not Use. Use view.update(gameState) instead")
     var state = gameState.getState()
 
     var getViewsForLane = function(laneData) {

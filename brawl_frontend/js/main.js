@@ -21,8 +21,8 @@ $(document).ready(function ($) {
   var debug = window.location.href.indexOf("debug") !== -1 ? true : false
   
   try {
-    socket = new WebSocket("ws://ps86615.dreamhostps.com:8080/play")
-    // socket = new WebSocket("ws://" + window.location.host + ":8080/play")
+    // socket = new WebSocket("ws://ps86615.dreamhostps.com:8080/play")
+    socket = new WebSocket("ws://" + window.location.host + ":8080/play")
   } catch (e) {
     socket = new MozWebSocket("ws://" + window.location.host + ":8080/play")
   }
