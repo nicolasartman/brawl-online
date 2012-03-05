@@ -106,8 +106,6 @@ var view = (function (us) {
    * only what has changed since the last update
   */
   var update = function (state) {
-    console.log("GameState:")
-    console.log(state)
     function updateHandsAndDiscards () {
       var playerData
       
@@ -134,6 +132,9 @@ var view = (function (us) {
     
     function updateLanes () {
       $('.lane').each(function (currentLaneNumber) {
+        // FIXME: remove hack and solve actual problem
+        $(this).children(".card").hide()
+        
         var currentLaneUI = $(this)
         if (currentLaneNumber < state.bases.length ) {
           // update the base
