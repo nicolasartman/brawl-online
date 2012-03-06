@@ -133,7 +133,7 @@ var view = (function (us) {
       // If a lane was added or removed since last update, 
       // then all lanes have shifted position and must be re-rendered
       if ($('.base').length != state.bases.length) {
-        $('.lane').children(".card").hide()
+        $('.lane').children(".card").hide().not(".base").removeClass("red blue green none")
       }
       
       $('.lane').each(function (currentLaneNumber) { 
