@@ -15,9 +15,8 @@ var view = (function (us) {
   /*
    * DEPRECATED
   */
-  var render = function() {
+  var render = function(state) {
     console.log("Render is Deprecated, Do Not Use. Use view.update(gameState) instead")
-    var state = gameState.getState()
 
     var getViewsForLane = function(laneData) {
       var getViewForCard = function(cardData) {
@@ -51,16 +50,16 @@ var view = (function (us) {
         baseId: laneData.id
       }))
       // Top stack
-      for (i = 0; i < laneData.P1.length; i++) {
+      for (i = 0; i < laneData.p1.length; i++) {
         // css fix for cards so they stack going upwards instead of down
-        laneView.append(getViewForCard(laneData.P1[i]).attr({
+        laneView.append(getViewForCard(laneData.p1[i]).attr({
           location: 'base_p1',
           baseId: laneData.id
         }).css('margin-top', -180-i*30))
       }
       // Bottom stack
-      for (i = 0; i < laneData.P2.length; i++) {
-        laneView.append(getViewForCard(laneData.P2[i]).attr({
+      for (i = 0; i < laneData.p2.length; i++) {
+        laneView.append(getViewForCard(laneData.p2[i]).attr({
           location: 'base_p2',
           baseId: laneData.id
         }).css('margin-top', 60+i*30))
@@ -69,27 +68,27 @@ var view = (function (us) {
       return laneView
     }
 
-    var renderPlayerHandAndDiscard = function (playerName) {
+    var renderPlayerHandAndDiscard = function (playerName, index) {
       var playerData = state[playerName]
 
       // Render the cards in their hand and discard
-      us.each(["Hand", "Discard"], function (position) {
+      us.each(["hand", "discard"], function (position) {
         // Clear old card color
-        $("#" + playerName + position).removeClass('red blue green none')
+        $("#player" + (index + 1) + "-" + position).removeClass('red blue green none')
         if (playerData[position.toLowerCase()]) {
           // Set new color
-          $("#" + playerName + position).addClass(playerData[position.toLowerCase()].color)
+          $("#player" + (index + 1) + "-" + position).addClass(playerData[position.toLowerCase()].color)
           // Set card type label
-          $("#" + playerName + position).text(playerData[position.toLowerCase()].cardType)
+          $("#player" + (index + 1) + "-" + position).text(playerData[position.toLowerCase()].cardType)
         } else {
           // Clear card type label
-          $("#" + playerName + position).text(position)
+          $("#player" + (index + 1) + "-" + position).text(position)
         }
       })
     }
 
-    us.each(["P1", "P2"], function (playerName) {
-      renderPlayerHandAndDiscard(playerName)
+    us.each(["p1", "p2"], function (playerName, index) {
+      renderPlayerHandAndDiscard(playerName, index)
     })
 
     // TODO: rename all this crap so it makes some semblance of sense!
@@ -131,12 +130,15 @@ var view = (function (us) {
     }
     
     function updateLanes () {
-      $('.lane').each(function (currentLaneNumber) {
-        // FIXME: remove hack and solve actual problem
-        $(this).children(".card").hide()
-        
+      // If a lane was added or removed since last update, 
+      // then all lanes have shifted position and must be re-rendered
+      if ($('.base').length != state.bases.length) {
+        $('.lane').children(".card").hide()
+      }
+      
+      $('.lane').each(function (currentLaneNumber) { 
         var currentLaneUI = $(this)
-        if (currentLaneNumber < state.bases.length ) {
+        if (currentLaneNumber < state.bases.length) {
           // update the base
           currentLaneUI.find(".base")
           .html("base<br>(" + 
