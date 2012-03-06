@@ -105,80 +105,77 @@ var view = (function (us) {
    * only what has changed since the last update
   */
   var update = function (state) {
-    function updateHandsAndDiscards () {
-      var playerData
-      
-      us.each(["player-1", "player-2"], function (playerName, playerNumber) {
-        playerData = state["p" + (playerNumber + 1)] // TODO: update naming to fix convention
-        
-        us.each(["hand", "discard"], function (position) {
-          var positionUIElement = $("#" + playerName + "-" + position)
-          // Clear old card color
-          positionUIElement.removeClass('red blue green none')
-          // If there's a card in that position, show it, otherwise show the placeholder
-          if (playerData[position]) {
-            // Set new color
-            positionUIElement.addClass(playerData[position.toLowerCase()].color)
-            // Set card type label
-            positionUIElement.text(playerData[position.toLowerCase()].cardType)
-          } else {
-            // Clear card type label
-            positionUIElement.text(position)
-          }
-        })
-      })
-    }
     
-    function updateLanes () {
-      // If a lane was added or removed since last update, 
-      // then all lanes have shifted position and must be re-rendered
-      if ($('.base').length != state.bases.length) {
-        $('.lane').children(".card").hide().not(".base").removeClass("red blue green none")
-      }
+    // = Update Hands and Discards =
+    
+    var playerData
+    
+    us.each(["player-1", "player-2"], function (playerName, playerNumber) {
+      playerData = state["p" + (playerNumber + 1)] // TODO: update naming to fix convention
       
-      $('.lane').each(function (currentLaneNumber) { 
-        var currentLaneUI = $(this)
-        if (currentLaneNumber < state.bases.length) {
-          // update the base
-          currentLaneUI.find(".base")
-          .html("base<br>(" + 
-            us.reduce(state.bases[currentLaneNumber].modifiers, function (memo, card) {
-              return memo + card.cardType.charAt(0) + card.cardType.charAt(1) + ","
-            }, "") + ")" )
-          .attr('baseid', state.bases[currentLaneNumber].id)
-          .show()
-          
-          // update the stacks
-          us.each(['p1', 'p2'], function (stackDirection) {
-            // Get the first empty card spot and start updating from there.
-            // Since the only thing a player can do is add cards to a stack,
-            // there's no need to bother with anything that was already rendered
-            var stackUI = currentLaneUI.children("." + stackDirection + "stack")
-            var cardNumber = stackUI.filter(":visible").length
-            var stack = state.bases[currentLaneNumber][stackDirection]
-            var cardsInStack = stack.length
-            var cardData
-            
-            while (cardNumber < cardsInStack) {
-              cardData = stack[cardNumber]
-              stackUI.eq(cardNumber)
-                     .html("<div class='cardLabelTop'>" + cardData.cardType + "</div>" +
-                            "<div class='cardLabelBottom'>" + cardData.cardType + "</div>")
-                     .addClass(cardData.color)
-                     .show()
-              
-              cardNumber++
-            }            
-          })
+      us.each(["hand", "discard"], function (position) {
+        var positionUIElement = $("#" + playerName + "-" + position)
+        // Clear old card color
+        positionUIElement.removeClass('red blue green none')
+        // If there's a card in that position, show it, otherwise show the placeholder
+        if (playerData[position]) {
+          // Set new color
+          positionUIElement.addClass(playerData[position.toLowerCase()].color)
+          // Set card type label
+          positionUIElement.text(playerData[position.toLowerCase()].cardType)
         } else {
-          $(this).find(".card").hide().not(".base").removeClass("red blue green none")
+          // Clear card type label
+          positionUIElement.text(position)
         }
       })
+    })
+    
+    // = Update Lanes =
+    
+    // If a lane was added or removed since last update, 
+    // then all lanes have shifted position and must be re-rendered
+    if ($('.base').length != state.bases.length) {
+      $('.lane').children(".card").hide().not(".base").removeClass("red blue green none")
     }
     
-    updateHandsAndDiscards()
-    updateLanes()
-
+    $('.lane').each(function (currentLaneNumber) { 
+      var currentLaneUI = $(this)
+      if (currentLaneNumber < state.bases.length) {
+        // update the base
+        currentLaneUI.find(".base")
+        .html("base<br>(" + 
+          us.reduce(state.bases[currentLaneNumber].modifiers, function (memo, card) {
+            return memo + card.cardType.charAt(0) + card.cardType.charAt(1) + ","
+          }, "") + ")" )
+        .attr('baseid', state.bases[currentLaneNumber].id)
+        .show()
+        
+        // update the stacks
+        us.each(['p1', 'p2'], function (stackDirection) {
+          // Get the first empty card spot and start updating from there.
+          // Since the only thing a player can do is add cards to a stack,
+          // there's no need to bother with anything that was already rendered
+          var stackUI = currentLaneUI.children("." + stackDirection + "stack")
+          var cardNumber = stackUI.filter(":visible").length
+          var stack = state.bases[currentLaneNumber][stackDirection]
+          var cardsInStack = stack.length
+          var cardData
+          
+          while (cardNumber < cardsInStack) {
+            cardData = stack[cardNumber]
+            stackUI.eq(cardNumber)
+                   .html("<div class='cardLabelTop'>" + cardData.cardType + "</div>" +
+                          "<div class='cardLabelBottom'>" + cardData.cardType + "</div>")
+                   .addClass(cardData.color)
+                   .show()
+            
+            cardNumber++
+          }            
+        })
+      } else {
+        $(this).find(".card").hide().not(".base").removeClass("red blue green none")
+      }
+    })
   }
   self.update = update
 
