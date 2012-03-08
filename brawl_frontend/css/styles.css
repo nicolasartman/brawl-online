@@ -163,7 +163,9 @@ div {
 
 /* default/blank card */
 .card {
-  font: 1.4em "Impact", "Trebuchet MS", Verdana, sans-serif;
+  font: 1.4em "Obitron", "Trebuchet MS", Verdana, sans-serif;
+  font-weight: 700;
+  text-transform:uppercase;
   border: 2px dotted #999;
   color: #CCC;
   position: relative;
