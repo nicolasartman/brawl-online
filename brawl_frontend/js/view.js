@@ -91,8 +91,6 @@ var view = (function (us) {
       renderPlayerHandAndDiscard(playerName, index)
     })
 
-    // TODO: rename all this crap so it makes some semblance of sense!
-    // For each lane
     $('.lane').html("");
     us.each(state.bases, function (laneData, currentLaneNumber) {
       $('.lane').eq(currentLaneNumber).html(getViewsForLane(laneData))
@@ -143,10 +141,10 @@ var view = (function (us) {
       if (currentLaneNumber < state.bases.length) {
         // update the base
         currentLaneUI.find(".base")
-        .html("base<br>(" + 
+        .html("<br /><b>Base</b>" + 
           us.reduce(state.bases[currentLaneNumber].modifiers, function (memo, card) {
-            return memo + card.cardType.charAt(0) + card.cardType.charAt(1) + ","
-          }, "") + ")" )
+            return memo + "<i>[" + card.cardType + "]</i><br />"
+          }, "<br />"))
         .attr('baseid', state.bases[currentLaneNumber].id)
         .show()
         
@@ -164,8 +162,7 @@ var view = (function (us) {
           while (cardNumber < cardsInStack) {
             cardData = stack[cardNumber]
             stackUI.eq(cardNumber)
-                   .html("<div class='cardLabelTop'>" + cardData.cardType + "</div>" +
-                          "<div class='cardLabelBottom'>" + cardData.cardType + "</div>")
+                   .text(cardData.cardType)
                    .addClass(cardData.color)
                    .show()
             
