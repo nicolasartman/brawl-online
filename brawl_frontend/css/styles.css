@@ -163,8 +163,8 @@ div {
 
 /* default/blank card */
 .card {
-  font: 1.4em "Obitron", "Trebuchet MS", Verdana, sans-serif;
-  font-weight: 700;
+  font: 1.3em "PT Sans Caption", "Trebuchet MS", Verdana, sans-serif;
+/*  font-weight: 700;*/
   text-transform:uppercase;
   border: 2px dotted #999;
   color: #CCC;
@@ -182,8 +182,9 @@ div {
   line-height: 210px;
 }
 
-/* card colors */
+/* actual card colors (ignoring placeholder cards) */
 .red, .blue, .green, .none {
+  font-family: "Abril Fatface";
   border: 2px solid #999;
   color: #000;
 }
