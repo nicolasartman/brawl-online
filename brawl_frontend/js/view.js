@@ -248,8 +248,8 @@ var view = (function (us) {
    * Public - Sets the labels for the decks for both players
   */
   var setPlayerDeckNames = function (p1DeckName, p2DeckName) {
-    $('#P1Deck').text(p1DeckName)
-    $('#P2Deck').text(p2DeckName)
+    $('#player-1-deck').text(p1DeckName)
+    $('#player-2-deck').text(p2DeckName)
   }
   self.setPlayerDeckNames = setPlayerDeckNames
 
