@@ -334,10 +334,10 @@ var view = (function (us) {
     /* Keyboard shortcuts */
     $(window.document).keydown(function (event) {
       if (event.which === 65 || event.which === 186) {
-        $('#P1Deck').click()
+        $('#player-1-deck').click()
       }
       else if (event.which === 81 || event.which === 80) {
-        $('#P1Hand').click()
+        $('#player-1-hand').click()
       }
       // TODO: remove
       else if (event.which == 68) {
