@@ -208,12 +208,11 @@ div {
 
 .base.card {
   margin-top: -60px;
-  font-size: 1em;
 }
 
-/* FIXME: dirty hack */
-.base.card b{
-  font-size: 1.3em;
+/* FIXME: slight hack */
+.base.card i{
+  font-size: 1em;
 }
 
 /* A card in a lane */
