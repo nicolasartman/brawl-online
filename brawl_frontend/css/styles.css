@@ -88,10 +88,10 @@ div {
   border: 1px solid #AAA;
 }
 
-.choice.disabled {
-  background-color: #222;
-  color: #999;
-  border: 1px solid #777;
+.choice.disabled, .choice.disabled:hover {
+  background-color: #272727;
+  color: #777;
+  border: 1px solid #555;
 }
 
 #choose-player-type-dialog {

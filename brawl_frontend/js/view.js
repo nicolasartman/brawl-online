@@ -218,8 +218,16 @@ var view = (function (us) {
   /*
    * Public - Promps the player to choose player1, player2, or spectator
   */
-  var showChoosePlayerTypeDialog = function () {
-    $('#choose-player-type-dialog').fadeIn(200);
+  var showChoosePlayerTypeDialog = function (playerSlots) {
+    $('#choose-player-type-dialog').fadeIn(200)
+    
+    us.each(["player1", "player2"], function (player) {
+      if (playerSlots[player]) {
+        $('#choose-player-type-dialog #' + player).removeClass('disabled')
+      } else {
+        $('#choose-player-type-dialog #' + player).addClass('disabled')
+      }
+    })
   }
   self.showChoosePlayerTypeDialog = showChoosePlayerTypeDialog
 
@@ -227,7 +235,7 @@ var view = (function (us) {
    * Public - Promps the player to choose a character (deck) to use
   */
   var showChooseCharacterDialog = function () {
-    $('#choose-character-dialog').fadeIn(200);
+    $('#choose-character-dialog').fadeIn(200)
   }
   self.showChooseCharacterDialog = showChooseCharacterDialog
 
@@ -278,13 +286,15 @@ var view = (function (us) {
 
     // Choose player type dialog
     $('#choose-player-type-dialog .player-type-choice').click(function (event) {
-      $('#choose-player-type-dialog').fadeOut(200)
+      if (!$(event.target).hasClass("disabled")) {
+        $('#choose-player-type-dialog').fadeOut(200)
 
-      if ($(event.target).attr("choice") !== "spectator") {
-        server.sendJoin($(event.target).attr("choice"))
-      } else {
-        server.sendRequestGameState()
-        showPlayArea()
+        if ($(event.target).attr("choice") !== "spectator") {
+          server.sendJoin($(event.target).attr("choice"))
+        } else {
+          server.sendRequestGameState()
+          showPlayArea()
+        }        
       }
     })
 

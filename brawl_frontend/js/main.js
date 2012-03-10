@@ -122,7 +122,7 @@ $(document).ready(function ($) {
     }
     // Recoverable errors
     else if (message.messageType === "error" && message.data.errorType === "join_failed") {
-      view.showChoosePlayerTypeDialog()
+      view.showChoosePlayerTypeDialog(message.data.player1, message.data.player2)
     }
     else if (message.messageType === "error" && message.data.errorType === "game_not_found") {
       view.showChooseGameDialog()
