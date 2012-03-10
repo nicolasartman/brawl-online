@@ -2,8 +2,8 @@
 -behavior(gen_server).
 -include("include/brawl_req.hrl").
 -export([start/0, start_link/0, init/1, handle_call/3, terminate/2]).
--export([new_game/0, start_game/1, play/4, 
-         state/1, stop/1, exists/1, leave/2, join/3, get_players/1, get_decks/1]).
+-export([new_game/0, start_game/1, play/4, pick_deck/3,
+         state/1, stop/1, exists/1, leave/2, join/2, get_players/1, get_decks/1]).
 
 new_game() ->
   GameId = brawl:generate_id(),
@@ -25,8 +25,10 @@ get_players(GameId) ->
   call_game(GameId, get_players).
 state(GameId) ->
   call_game(GameId, visible_state).
-join(GameId, Player, Deck) ->
-  call_game(GameId, {join, Player, Deck}).
+join(GameId, Player) ->
+  call_game(GameId, {join, Player}).
+pick_deck(GameId, Player, Deck) ->
+  call_game(GameId, {pick_deck, Player, Deck}).
 leave(GameId, Player) ->
   call_game(GameId, {leave, Player}).
 get_decks(GameId) ->
@@ -77,33 +79,42 @@ visible_state({Bases, { P1Hand, P1Discard, _ }, { P2Hand, P2Discard, _ }}) ->
 
 handle_call(stop, _From, Game) ->
   {stop, normal, ok, Game};
-handle_call({join, Player, Deck}, _From, Game) ->
+handle_call({pick_deck, PlayerId, Deck}, _From, Game) ->
+  P1 = Game#brawl_game.player1,
+  P2 = Game#brawl_game.player2,
+  NextGame = case PlayerId of
+    P1 ->
+      case Game#brawl_game.state of
+        none ->
+          Game#brawl_game{player1deck=Deck};
+        _InProgress  ->
+          Game
+      end;
+    P2 ->
+      case Game#brawl_game.state of
+        none ->
+          Game#brawl_game{player2deck=Deck};
+        _InProgress  ->
+          Game
+     end
+  end,
+  {reply, ok, NextGame};
+handle_call({join, Player}, _From, Game) ->
   case Player of
     player1 ->
-      NewDeck = case Game#brawl_game.state of
-        none ->
-          Deck;
-        _InProgress  ->
-          Game#brawl_game.player1deck
-      end,
+      
       case Game#brawl_game.player1 of
         none ->
           Id=brawl:generate_id(),
-          {reply, Id, Game#brawl_game{player1deck=NewDeck, player1=Id}};
+          {reply, Id, Game#brawl_game{player1=Id}};
         _ ->
           {reply, {error, already_joined}, Game}
       end;
     player2 ->
-      NewDeck = case Game#brawl_game.state of
-        none ->
-          Deck;
-        _InProgress  ->
-          Game#brawl_game.player2deck
-      end,
       case Game#brawl_game.player2 of
         none ->
           Id=brawl:generate_id(),
-          {reply, Id, Game#brawl_game{player2deck=NewDeck, player2=Id}};
+          {reply, Id, Game#brawl_game{player2=Id}};
         _ ->
           {reply, {error, already_joined}, Game}
       end;
@@ -134,8 +145,8 @@ handle_call(start_game, _From, Game) ->
       {reply, {started, visible_state(State)}, Game};
     #brawl_game{player1=Player1, player2=Player2, state=none,
                 player1deck = Deck1, player2deck = Deck2} when
-        Player1 /= none,
-        Player2 /= none ->
+        Player1 /= none, Player2 /= none,
+        Deck1 /= none, Deck2 /= none ->
       {Deck1Name, Deck2Name, GameState} = brawl:new_game(Deck1, Deck2),
       {reply, {started, visible_state(GameState)}, Game#brawl_game{state=GameState, player1deck=Deck1Name, player2deck=Deck2Name}};
     _ ->

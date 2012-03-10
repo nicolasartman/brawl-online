@@ -19,7 +19,7 @@ handle(Req, State) ->
   io:format("Handling request~n"),
   GameId = brawl_server:new_game(),
   io:format("Created game ~s~n", [GameId]),
-  Encoded = jiffy:encode({[ { <<"gameID:">>, GameId } ]}),
+  Encoded = jiffy:encode({[ { <<"gameID">>, GameId } ]}),
   {ok, Output} = cowboy_http_req:reply(200, [], Encoded, Req),
   {ok, Output, State}.
 
@@ -49,9 +49,19 @@ websocket_handle({text, Msg}, Req, PlayerId) ->
           io:format("No match found: ~w~n~n", [Result]),
           {reply, {text, create_error("No game found", "game_not_found")}, Req, PlayerId}
       end;
-    #brawl_req{message_type = "join", game_id = GameId, deck=Deck, player_type=PlayerType } ->
+    #brawl_req{message_type = "choose_character", game_id = GameId, deck = Deck} ->
+      io:format("selecting deck:~w ~w ~w", [GameId, PlayerId, Deck]),
+      brawl_server:pick_deck(GameId, PlayerId, Deck),
+      case brawl_server:start_game(GameId) of
+        {started, GameState} ->
+          broadcast_start(GameId, GameState);
+        _ ->
+          ok
+      end,
+      {ok, Req, PlayerId};
+    #brawl_req{message_type = "join", game_id = GameId, player_type=PlayerType } ->
       io:format("Join message received, GameID: ~w~n", [GameId]),
-      case brawl_server:join(GameId, PlayerType, Deck) of
+      case brawl_server:join(GameId, PlayerType) of
         {error, already_joined} ->
           {reply, {text, create_error("Player slot taken", "join_failed")}, Req, PlayerId};
         spectator ->
@@ -217,7 +227,7 @@ interpret_parameters([], OutParams) ->
   OutParams;
 interpret_parameters([{<<"messageType">>, Type} | Params], OutParams) ->
   interpret_parameters(Params, OutParams#brawl_req{message_type = bitstring_to_list(Type)});
-interpret_parameters([{<<"deck">>, Deck} | Params], OutParams) ->
+interpret_parameters([{<<"character">>, Deck} | Params], OutParams) ->
   interpret_parameters(Params, OutParams#brawl_req{deck = bitstring_to_list(Deck)});
 interpret_parameters([{<<"playerID">>, PlayerId} | Params], OutParams) ->
   interpret_parameters(Params, OutParams#brawl_req{player_id=PlayerId});
