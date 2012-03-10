@@ -277,9 +277,6 @@ var view = (function (us) {
       }
     })
 
-    // For passing along the continuation from player type dialog to character dialog
-    var sendJoinMessage;
-
     // Choose player type dialog
     $('#choose-player-type-dialog .player-type-choice').click(function (event) {
       $('#choose-player-type-dialog').fadeOut(200)
