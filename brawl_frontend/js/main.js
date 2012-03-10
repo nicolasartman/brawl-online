@@ -46,7 +46,7 @@ $(document).ready(function ($) {
         gameID: gameID
       }))
     },
-    sendChooseCharacterMove: function (character) {
+    sendChooseCharacter: function (character) {
       socket.send(JSON.stringify({
         gameID:       gameID,
         character:    character
