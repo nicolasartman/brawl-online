@@ -309,7 +309,7 @@ var view = (function (us) {
     $('#new-game').click(function (event) {
       $('#choose-game-dialog').fadeOut(200)
       $.get('http://' + window.location.host + '/brawl/new_game', function (data, textStatus, xhr) {
-        var gameID = JSON.parse(data)["GameId:"]
+        var gameID = JSON.parse(data)["gameID:"]
         
         // Show the gameID to the user so they can send it to friends
         displayGameID(gameID)

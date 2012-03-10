@@ -70,6 +70,8 @@ init(_GameId) ->
 terminate(_Reason, _State) ->
   ok.
 
+visible_state(none) ->
+  none;
 visible_state({Bases, { P1Hand, P1Discard, _ }, { P2Hand, P2Discard, _ }}) ->
   {Bases, {P1Hand, P1Discard}, {P2Hand, P2Discard}}.
 

@@ -55,6 +55,7 @@
 {
   "messageType": "connected",
   "data": {
+    "started": boolean,
     // true means open
     "player1": boolean,
     "player2": boolean,

@@ -19,7 +19,7 @@ handle(Req, State) ->
   io:format("Handling request~n"),
   GameId = brawl_server:new_game(),
   io:format("Created game ~s~n", [GameId]),
-  Encoded = jiffy:encode({[ { <<"GameId:">>, GameId } ]}),
+  Encoded = jiffy:encode({[ { <<"gameID:">>, GameId } ]}),
   {ok, Output} = cowboy_http_req:reply(200, [], Encoded, Req),
   {ok, Output, State}.
 
@@ -41,7 +41,8 @@ websocket_handle({text, Msg}, Req, PlayerId) ->
         true ->
           ets:insert(connections, #brawl_connection{game_id=GameId, websocket=Req#http_req.pid}),
           {P1, P2} = brawl_server:get_players(GameId),
-          Reply = create_connected(P1 == none, P2 == none, brawl:decks()),
+          State = brawl_server:state(GameId),
+          Reply = create_connected(P1 == none, P2 == none, State /= none, brawl:decks()),
           io:format("Game found, players: ~w ~w, reply:~s~n", [P1, P2, Reply]),
           {reply, {text,Reply}, Req, PlayerId};
         Result ->
@@ -140,8 +141,8 @@ create_error(Msg, ErrorType) ->
   create_message(<<"error">>, {[ {<<"errorMessage">>, list_to_bitstring(Msg) },
                                  {<<"errorType">>, list_to_bitstring(ErrorType)} ]}).
 
-create_connected(P1, P2, Decks) ->
-  create_message(<<"connected">>, {[ {<<"player1">>, P1 }, {<<"player2">>, P2},
+create_connected(P1, P2, Started,  Decks) ->
+  create_message(<<"connected">>, {[ {<<"player1">>, P1 }, {<<"player2">>, P2}, {<<"started">>, Started}, 
                   {<<"decks">>, lists:foldl(fun(Name, List) -> 
                                               [ list_to_bitstring(Name) | List ]
                                             end, [], Decks)} ]}).
