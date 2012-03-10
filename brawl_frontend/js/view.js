@@ -291,7 +291,7 @@ var view = (function (us) {
     // Choose character dialog
     $('#choose-character-dialog .choice').click(function (event) {
       $('#choose-character-dialog').fadeOut(200)
-      sendChooseCharacterMessage($(event.target).attr("id"))
+      server.sendChooseCharacterMessage($(event.target).attr("id"))
     })
 
     // Choose new game or join existing game dialog

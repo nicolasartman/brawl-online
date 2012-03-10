@@ -47,6 +47,7 @@ $(document).ready(function ($) {
       }))
     },
     sendChooseCharacter: function (character) {
+      view.showNotification('choosing character...')
       socket.send(JSON.stringify({
         gameID:       gameID,
         character:    character
