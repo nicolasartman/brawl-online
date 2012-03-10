@@ -131,7 +131,7 @@ $(document).ready(function ($) {
       console.log(message)
     }
     if (message.messageType === "error") {
-      alert("Error: " + message.data.errorMessage)
+      view.showNotification("Error: " + message.data.errorMessage)
     }
   }
   socket.onerror = function (error) {

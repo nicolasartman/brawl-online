@@ -211,7 +211,6 @@ var view = (function (us) {
    * Public - Prompts the player to start a new game or choose an existing one
   */
   var showChooseGameDialog = function () {
-    clearNotification()
     $('#choose-game-dialog').fadeIn(200)
   }
   self.showChooseGameDialog = showChooseGameDialog
