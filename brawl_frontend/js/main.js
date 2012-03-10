@@ -79,7 +79,7 @@ $(document).ready(function ($) {
 
     if (message.messageType === "connected") {
       view.clearNotification()
-      view.showChoosePlayerTypeDialog() // triggers a join event after prompting them
+      view.showChoosePlayerTypeDialog({ player1: message.data.player1, player2: message.data.player2 })
     }
     else if (message.messageType === "joined") {
       view.clearNotification()
@@ -122,7 +122,7 @@ $(document).ready(function ($) {
     }
     // Recoverable errors
     else if (message.messageType === "error" && message.data.errorType === "join_failed") {
-      view.showChoosePlayerTypeDialog(message.data.player1, message.data.player2)
+      view.showChoosePlayerTypeDialog({ player1: true, player2: true })
     }
     else if (message.messageType === "error" && message.data.errorType === "game_not_found") {
       view.showChooseGameDialog()
