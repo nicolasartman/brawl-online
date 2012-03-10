@@ -18,6 +18,16 @@
   }
 }
 
+// Choose Character
+
+{
+  "messageType": "choose_character",
+  "data": {
+    "gameID": number,
+    "character": string
+  }
+}
+
 // Card Move
 {
   "messageType": "card_move",
