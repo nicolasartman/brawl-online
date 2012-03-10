@@ -88,6 +88,12 @@ div {
   border: 1px solid #AAA;
 }
 
+.choice.disabled {
+  background-color: #222;
+  color: #999;
+  border: 1px solid #777;
+}
+
 #choose-player-type-dialog {
   width: 450px;
   height: 210px;
@@ -211,38 +217,8 @@ div {
 }
 
 /* FIXME: slight hack */
-.base.card i{
+.base.card i {
   font-size: 1em;
-}
-
-/* A card in a lane */
-.lane .card {
-  position: absolute;
-  left:50%;
-  margin-left: -45px;
-  top: 50%;
-}
-
-.cardLabelBottom {
-  position: absolute;
-  bottom:0;
-  right:0;
-}
-
-
-.lane {
-  float: left;
-  position: relative;
-  width: 150px;
-  height: 600px;
-  border: 2px dotted #999;
-  background-color: #333;
-/*  margin-top: -500px; */
-}
-
-/* Hide the cards in the lanes until they are 'rendered' */
-.lane > .card {
-  display: none;
 }
 
 #lanes {
@@ -255,6 +231,26 @@ div {
 /*  width: 465px;*/
   overflow: visible;
 }
+
+.lane {
+  float: left;
+  position: relative;
+  width: 150px;
+  height: 600px;
+  border: 2px dotted #999;
+  background-color: #333;
+/*  margin-top: -500px; */
+}
+
+/* A card in a lane */
+.lane .card {
+  display: none; /* hidden by default, until 'rendered' */
+  position: absolute;
+  left:50%;
+  margin-left: -45px;
+  top: 50%;
+}
+
 
 .base {
   line-height: 20px;
