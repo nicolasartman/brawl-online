@@ -220,8 +220,6 @@ var view = (function (us) {
    * Public - Promps the player to choose player1, player2, or spectator
   */
   var showChoosePlayerTypeDialog = function () {
-    // prompt for player type
-    clearNotification()
     $('#choose-player-type-dialog').fadeIn(200);
   }
   self.showChoosePlayerTypeDialog = showChoosePlayerTypeDialog
@@ -230,8 +228,6 @@ var view = (function (us) {
    * Public - Promps the player to choose a character (deck) to use
   */
   var showChooseCharacterDialog = function () {
-    // prompt for character
-    clearNotification()
     $('#choose-character-dialog').fadeIn(200);
   }
   self.showChooseCharacterDialog = showChooseCharacterDialog
@@ -256,12 +252,12 @@ var view = (function (us) {
   /*
    * Public - Initializes the view
   */
-  var init = function (callbacks) {
+  var init = function (server) {
     // Play on top/bottom of lane when the lane or the lane itself is clicked
     $('.lane').click(function (event) {
       // Ignore clicked base cards and allow the click to keep bubbling up
       if (!$(event.target).hasClass("base")) {
-        callbacks.sendCardMove("hand",
+        server.sendCardMove("hand",
           ((event.pageY - $(this).offset().top < $(this).height() / 2) ? "base_p1" : "base_p2"),
           ($(this).find('div.base').first().attr('baseid')))
         event.stopPropagation()
@@ -270,14 +266,14 @@ var view = (function (us) {
     $('#play-area').click(function (event) {
       // Catch bubbled up card events
       if ($(event.target).hasClass('card')) {
-        callbacks.sendCardMove($(event.target).attr("fromLocation"),
+        server.sendCardMove($(event.target).attr("fromLocation"),
                      $(event.target).attr("toLocation"),
                      $(event.target).attr("baseid"))
       }
       // Else attempt to play a new base on the left or right
       else {
         var to = (event.pageX - $(this).offset().left < $(this).width() / 2) ? "base_left" : "base_right"
-        callbacks.sendCardMove("hand", to)
+        server.sendCardMove("hand", to)
       }
     })
 
@@ -287,14 +283,11 @@ var view = (function (us) {
     // Choose player type dialog
     $('#choose-player-type-dialog .player-type-choice').click(function (event) {
       $('#choose-player-type-dialog').fadeOut(200)
-      sendJoinMessage = function (character) {
-        callbacks.sendJoin($(event.target).attr("choice"), character)
-      }
-      // Trigger the next dialog
+
       if ($(event.target).attr("choice") !== "spectator") {
-        showChooseCharacterDialog()
+        server.sendJoin($(event.target).attr("choice"))
       } else {
-        callbacks.sendRequestGameState()
+        server.sendRequestGameState()
         showPlayArea()
       }
     })
@@ -302,7 +295,7 @@ var view = (function (us) {
     // Choose character dialog
     $('#choose-character-dialog .choice').click(function (event) {
       $('#choose-character-dialog').fadeOut(200)
-      sendJoinMessage($(event.target).attr("id"))
+      sendChooseCharacterMessage($(event.target).attr("id"))
     })
 
     // Choose new game or join existing game dialog
@@ -315,7 +308,7 @@ var view = (function (us) {
         displayGameID(gameID)
 
         // TODO: fix key so it's gameID
-        callbacks.sendConnect(gameID)
+        server.sendConnect(gameID)
       })
     })
     $('#existing-game').click(function (event) {
@@ -325,7 +318,7 @@ var view = (function (us) {
       // Show the gameID to the user so they can send it to friends
       displayGameID(gameID)
 
-      callbacks.sendConnect(gameID)
+      server.sendConnect(gameID)
     })
     $('#existing-game-container input').focus(function(event) {
       $(this).val("")

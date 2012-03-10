@@ -46,6 +46,12 @@ $(document).ready(function ($) {
         gameID: gameID
       }))
     },
+    sendChooseCharacterMove: function (character) {
+      socket.send(JSON.stringify({
+        gameID:       gameID,
+        character:    character
+      }))
+    },
     sendCardMove: function (from, to, baseID) {
       socket.send(JSON.stringify({
         gameID:       gameID,
@@ -76,8 +82,11 @@ $(document).ready(function ($) {
     }
     else if (message.messageType === "joined") {
       view.clearNotification()
+      view.showChooseCharacterDialog()
+    }
+    else if (message.messageType === "character_chosen") {
+      view.clearNotification()
       view.showNotification("Waiting for other player...")
-      console.log("Joined successfully, waiting for other player")
     }
     else if (message.messageType === "started") {
       view.clearNotification()
