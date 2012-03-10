@@ -85,6 +85,8 @@
 {
   "messageType": "started",
   "data": {
+   "player1Deck": string,
+   "player2Deck": string,
    "gameState": gamestate
   }
 }
