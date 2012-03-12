@@ -72,14 +72,15 @@ websocket_handle({text, Msg}, Req, PlayerId) ->
               {ok, Req, PlayerId}
           end;
         NewPlayerId when is_binary(NewPlayerId)->
-          Reply = create_joined(NewPlayerId),
-          io:format("Join reply: ~s~n", [Reply]),
           %TODO wait until a start message before starting
-          case brawl_server:start_game(GameId) of
+          Reply = case brawl_server:start_game(GameId) of
             {started, GameState} ->
-              broadcast_start(GameId, GameState);
-            _ -> ok
+              broadcast_start(GameId, GameState),
+              create_joined(NewPlayerId, true);
+            _ -> 
+              create_joined(NewPlayerId, false)
           end,
+          io:format("Join reply: ~s~n", [Reply]),
           {reply, {text, Reply}, Req, NewPlayerId};
         Result ->
           io:format("No game found: ~w~n", [Result]),
@@ -157,8 +158,8 @@ create_connected(P1, P2, Started,  Decks) ->
                                               [ list_to_bitstring(Name) | List ]
                                             end, [], Decks)} ]}).
 
-create_joined(Id) ->
-  create_message(<<"joined">>,{[ { <<"playerID">>, Id} ]}). 
+create_joined(Id, Started) ->
+  create_message(<<"joined">>, {[ { <<"playerID">>, Id}, { <<"started">>, Started } ]}). 
 
 create_game_state(State) ->
   create_message(<<"game_state">>, {[game_to_json_form(State)]}).
