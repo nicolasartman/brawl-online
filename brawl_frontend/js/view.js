@@ -135,7 +135,7 @@ var view = (function (us) {
     
     // If a lane was added or removed since last update, 
     // then all lanes have most likely shifted position and must be re-rendered
-    if ($('.base').length != state.bases.length) {
+    if ($('.base').filter(":visible").length !== state.bases.length) {
       $('.lane').children(".card").hide().not(".base").removeClass("red blue green none")
     }
     
