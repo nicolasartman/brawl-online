@@ -24,17 +24,17 @@ shuffle_deck(DeckIn, DeckOut) ->
   shuffle_deck( remove_index([], DeckIn, Index), [ Card | DeckOut]).
 
 decks() ->
-  [ "bennet", "chris", "darwin", "hale", "morgan", "pearl",
+  [ "bennett", "chris", "darwin", "hale", "morgan", "pearl",
     "alex", "crane", "gina", "mischo", "rent", "tess",
     "nickie", "sonia", "tamiya" ].
 
-create_deck("bennet") ->
+create_deck("bennett") ->
   Deck = build_deck_from_def(
     [ {{hit, blue}, 8}, {{hit2, blue}, 0}, {{block, blue}, 1},
     {{hit, green}, 3}, {{hit2, green}, 0}, {{block, green}, 1},
     {{hit, red}, 4}, {{hit2, red}, 0}, {{block, red}, 1},
     {base, 7}, {clear, 6}, {press, 1}], []),
-  {"bennet", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
+  {"bennett", lists:append(shuffle_deck(Deck, []), [freeze, freeze, freeze])};
 create_deck("chris") ->
   Deck = build_deck_from_def(
     [ {{hit, blue}, 7}, {{hit2, blue}, 0}, {{block, blue}, 2},
