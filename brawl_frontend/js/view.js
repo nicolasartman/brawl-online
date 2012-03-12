@@ -11,7 +11,10 @@ var us = _.noConflict();
 var view = (function (us) {
   "use strict";
   var self = {}
-
+  
+  // Private Vars
+  var animationDuration = 200 // in ms
+  
   /*
    * DEPRECATED
   */
@@ -180,13 +183,13 @@ var view = (function (us) {
    * Public - shows a notification
   */
   var showNotification = function (notificationType) {
-    $('#connecting-notification').slideUp(200)
+    $('#connecting-notification').slideUp(animationDuration)
     if (notificationType === 'connecting') {
       // Show the connecting message
-      $('#connecting-notification').slideDown(200)
+      $('#connecting-notification').slideDown(animationDuration)
     }
     else {
-      $('#connecting-notification').text(notificationType).slideDown(200)
+      $('#connecting-notification').text(notificationType).slideDown(animationDuration)
     }
   }
   self.showNotification = showNotification
@@ -195,7 +198,7 @@ var view = (function (us) {
    * Public - clears notification
   */
   var clearNotification = function () {
-    $('#connecting-notification').slideUp(200)
+    $('#connecting-notification').slideUp(animationDuration)
   }
   self.clearNotification = clearNotification
 
@@ -211,7 +214,7 @@ var view = (function (us) {
    * Public - Prompts the player to start a new game or choose an existing one
   */
   var showChooseGameDialog = function () {
-    $('#choose-game-dialog').fadeIn(200)
+    $('#choose-game-dialog').fadeIn(animationDuration)
   }
   self.showChooseGameDialog = showChooseGameDialog
 
@@ -219,7 +222,7 @@ var view = (function (us) {
    * Public - Promps the player to choose player1, player2, or spectator
   */
   var showChoosePlayerTypeDialog = function (playerSlots) {
-    $('#choose-player-type-dialog').fadeIn(200)
+    $('#choose-player-type-dialog').fadeIn(animationDuration)
     
     us.each(["player1", "player2"], function (player) {
       if (playerSlots[player]) {
@@ -235,10 +238,20 @@ var view = (function (us) {
    * Public - Promps the player to choose a character (deck) to use
   */
   var showChooseCharacterDialog = function () {
-    $('#choose-character-dialog').fadeIn(200)
+    $('#choose-character-dialog').fadeIn(animationDuration)
   }
   self.showChooseCharacterDialog = showChooseCharacterDialog
 
+  /*
+   * Public - Informs the player of the winner of the match and allows a rematch request
+  */
+  var showGameOverDialog = function (message) {
+    $('#game-over-dialog').fadeIn(animationDuration)
+    $('#game-over-dialog #winner').text(message)
+  }
+  self.showGameOverDialog = showGameOverDialog
+  
+  
   /*
    * Public - Shows the play area to the user
   */
@@ -287,7 +300,7 @@ var view = (function (us) {
     // Choose player type dialog
     $('#choose-player-type-dialog .player-type-choice').click(function (event) {
       if (!$(event.target).hasClass("disabled")) {
-        $('#choose-player-type-dialog').fadeOut(200)
+        $('#choose-player-type-dialog').fadeOut(animationDuration)
 
         if ($(event.target).attr("choice") !== "spectator") {
           server.sendJoin($(event.target).attr("choice"))
@@ -300,13 +313,13 @@ var view = (function (us) {
 
     // Choose character dialog
     $('#choose-character-dialog .choice').click(function (event) {
-      $('#choose-character-dialog').fadeOut(200)
+      $('#choose-character-dialog').fadeOut(animationDuration)
       server.sendChooseCharacter($(event.target).attr("id"))
     })
 
     // Choose new game or join existing game dialog
     $('#new-game').click(function (event) {
-      $('#choose-game-dialog').fadeOut(200)
+      $('#choose-game-dialog').fadeOut(animationDuration)
       $.get('http://' + window.location.host + '/brawl/new_game', function (data, textStatus, xhr) {
         var gameID = JSON.parse(data).gameID
         
@@ -319,7 +332,7 @@ var view = (function (us) {
     })
     $('#existing-game').click(function (event) {
       var gameID = $('#existing-game-container input').val()
-      $('#choose-game-dialog').fadeOut(200)
+      $('#choose-game-dialog').fadeOut(animationDuration)
 
       // Show the gameID to the user so they can send it to friends
       displayGameID(gameID)
@@ -328,6 +341,12 @@ var view = (function (us) {
     })
     $('#existing-game-container input').focus(function(event) {
       $(this).val("")
+    })
+
+    /* Game Over / Rematch */
+    $('#game-over-dialog #rematch').click(function (event) {
+      server.sendRematch()
+      $('#game-over-dialog').fadeOut(animationDuration)
     })
 
     /* Keyboard shortcuts */

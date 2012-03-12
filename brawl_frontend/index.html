@@ -114,6 +114,19 @@
       Connecting to game...
     </div>
     <div id="game-id"></div>
+    <div class="dialog" id="choose-game-dialog">
+      <div class="title">Join or Create a Game</div>
+      <div class="choice game-choice" id="new-game">
+        Create a Game
+      </div>
+      <div class="choice game-choice" id="existing-game-container">
+        Join game <br />
+        <input type="textfield" value="Paste game id number here"/>
+        <div class="choice" id="existing-game">
+          Join
+        </div>
+      </div>
+    </div>
     <div class="dialog" id="choose-player-type-dialog">
       <div class="title">Choose A Player</div>
       <div class="choice player-type-choice" id="player1" choice="player1">
@@ -147,17 +160,10 @@
         <div class="choice" id="random">  Random  </div>
       </div>
     </div>
-      <div class="dialog" id="choose-game-dialog">
-      <div class="title">Join or Create a Game</div>
-      <div class="choice game-choice" id="new-game">
-        Create a Game
-      </div>
-      <div class="choice game-choice" id="existing-game-container">
-        Join game <br />
-        <input type="textfield" value="Paste game id number here"/>
-        <div class="choice" id="existing-game">
-          Join
-        </div>
+    <div class="dialog" id="game-over-dialog">
+      <div class="title" id="winner">Round Over!</div>
+      <div class="choice" id="rematch">
+        Rematch
       </div>
     </div>
   </body>

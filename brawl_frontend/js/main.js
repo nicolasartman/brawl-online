@@ -68,6 +68,13 @@ $(document).ready(function ($) {
         gameID: gameID,
         messageType: "get_game_state"
       }))
+    },
+    sendRematch: function () {
+      view.showNotification('waiting for other player...')
+      socket.send(JSON.stringify({
+        gameID: gameID,
+        messageType: "rematch"
+      }))
     }
   })
 
@@ -100,22 +107,14 @@ $(document).ready(function ($) {
       view.setPlayerDeckNames(message.data.player1Deck, message.data.player2Deck)
 
       // Render the initial game and go!
-      // gameState.setState(message.data.gameState)
-      // view.render();
       view.update(message.data.gameState)
     }
     else if (message.messageType === "game_state") {
       // Update the game state and re-render
-      // gameState.setState(message.data.gameState)
-      // view.render();
       view.update(message.data.gameState)
     }
     else if (message.messageType === "game_over") {
-      alert(message.data.winner + " wins!")
-      socket.send(JSON.stringify({
-        messageType: "new_game",
-        gameID: gameID
-      }))
+      view.showGameOverDialog(message.data.winner + " wins!")
     }
     else if (message.messageType === "pause") {
       view.showNotification("Other player disconnected, waiting for rejoin...")

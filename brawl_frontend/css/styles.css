@@ -66,6 +66,19 @@ div {
   margin-left: 30px;
 }
 
+#game-over-dialog {
+  display: inline;
+  width: 400px;
+  height: 200px;
+}
+
+#game-over-dialog #rematch {
+  left: 140px;
+  width: 120px;
+  height: 70px;
+  line-height: 70px;
+}
+
 .title {
   margin-top: 20px;
   margin-bottom: 30px;
