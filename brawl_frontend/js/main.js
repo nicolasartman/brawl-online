@@ -63,10 +63,10 @@ $(document).ready(function ($) {
         toBase:       baseID
       }))
     },
-    sendRequestGameState: function () {
+    sendGetGameState: function () {
       socket.send(JSON.stringify({
         gameID: gameID,
-        messageType: "request_game_state"
+        messageType: "get_game_state"
       }))
     }
   })
