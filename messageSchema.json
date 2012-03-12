@@ -45,6 +45,12 @@
   "messageType": "get_game_state"
 }
 
+// Rematch
+
+{
+  "messageType": "rematch"
+}
+
 
 // =================================
 // = Messages returned from server =
