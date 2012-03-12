@@ -63,10 +63,10 @@ $(document).ready(function ($) {
         toBase:       baseID
       }))
     },
-    sendRequestGameState: function () {
+    sendGetGameState: function () {
       socket.send(JSON.stringify({
         gameID: gameID,
-        messageType: "request_game_state"
+        messageType: "get_game_state"
       }))
     }
   })
@@ -84,7 +84,9 @@ $(document).ready(function ($) {
     }
     else if (message.messageType === "joined") {
       view.clearNotification()
-      view.showChooseCharacterDialog()
+      if (!message.data.started) {
+        view.showChooseCharacterDialog()        
+      }
     }
     else if (message.messageType === "character_chosen") {
       view.clearNotification()

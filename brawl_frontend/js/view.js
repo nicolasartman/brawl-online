@@ -292,7 +292,7 @@ var view = (function (us) {
         if ($(event.target).attr("choice") !== "spectator") {
           server.sendJoin($(event.target).attr("choice"))
         } else {
-          server.sendRequestGameState()
+          server.sendGetGameState()
           showPlayArea()
         }        
       }
