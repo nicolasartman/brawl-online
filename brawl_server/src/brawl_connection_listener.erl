@@ -51,14 +51,15 @@ websocket_handle({text, Msg}, Req, PlayerId) ->
       end;
     #brawl_req{message_type = "choose_character", game_id = GameId, deck = Deck} ->
       io:format("selecting deck:~w ~w ~w", [GameId, PlayerId, Deck]),
-      brawl_server:pick_deck(GameId, PlayerId, Deck),
+      ActualDeck = brawl_server:pick_deck(GameId, PlayerId, Deck),
       case brawl_server:start_game(GameId) of
         {started, GameState} ->
           broadcast_start(GameId, GameState);
         _ ->
           ok
       end,
-      {ok, Req, PlayerId};
+      Reply = create_character_chosen(ActualDeck),
+      {reply, {text, Reply}, Req, PlayerId};
     #brawl_req{message_type = "join", game_id = GameId, player_type=PlayerType } ->
       io:format("Join message received, GameID: ~w~n", [GameId]),
       case brawl_server:join(GameId, PlayerType) of
@@ -157,6 +158,9 @@ create_connected(P1, P2, Started,  Decks) ->
                   {<<"decks">>, lists:foldl(fun(Name, List) -> 
                                               [ list_to_bitstring(Name) | List ]
                                             end, [], Decks)} ]}).
+
+create_character_chosen(Deck) ->
+  create_message(<<"character_chosen">>, {[ { <<"character">>, list_to_bitstring(Deck)} ]}).
 
 create_joined(Id, Started) ->
   create_message(<<"joined">>, {[ { <<"playerID">>, Id}, { <<"started">>, Started } ]}). 

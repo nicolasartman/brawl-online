@@ -82,27 +82,33 @@ handle_call(stop, _From, Game) ->
 handle_call({pick_deck, PlayerId, Deck}, _From, Game) ->
   P1 = Game#brawl_game.player1,
   P2 = Game#brawl_game.player2,
+  AvailableDecks = brawl:decks(),
+  ActualDeck = case lists:any(fun(ListDeck) -> ListDeck == Deck end, AvailableDecks) of
+    true ->
+      Deck;
+    false ->
+      lists:nth(random:uniform(length(AvailableDecks)), AvailableDecks)
+  end,
   NextGame = case PlayerId of
     P1 ->
       case Game#brawl_game.state of
         none ->
-          Game#brawl_game{player1deck=Deck};
+          Game#brawl_game{player1deck=ActualDeck};
         _InProgress  ->
           Game
       end;
     P2 ->
       case Game#brawl_game.state of
         none ->
-          Game#brawl_game{player2deck=Deck};
+          Game#brawl_game{player2deck=ActualDeck};
         _InProgress  ->
           Game
      end
   end,
-  {reply, ok, NextGame};
+  {reply, ActualDeck, NextGame};
 handle_call({join, Player}, _From, Game) ->
   case Player of
     player1 ->
-      
       case Game#brawl_game.player1 of
         none ->
           Id=brawl:generate_id(),
