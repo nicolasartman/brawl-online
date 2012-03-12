@@ -84,7 +84,9 @@ $(document).ready(function ($) {
     }
     else if (message.messageType === "joined") {
       view.clearNotification()
-      view.showChooseCharacterDialog()
+      if (!message.data.started) {
+        view.showChooseCharacterDialog()        
+      }
     }
     else if (message.messageType === "character_chosen") {
       view.clearNotification()
