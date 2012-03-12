@@ -91,6 +91,15 @@
   }
 }
 
+// Character successfully chosen
+
+{
+  "messageType": "character_chosen",
+  "data": {
+    "character": string
+  }
+}
+
 // Game State
 {
   "messageType": "game_state"
