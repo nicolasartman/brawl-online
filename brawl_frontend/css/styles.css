@@ -67,7 +67,6 @@ div {
 }
 
 #game-over-dialog {
-  display: inline;
   width: 400px;
   height: 200px;
 }
