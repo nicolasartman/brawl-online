@@ -112,9 +112,17 @@ var view = (function (us) {
    * Public - clears notification
   */
   var clearNotification = function () {
-    $('#connecting-notification').slideUp(animationDuration)
+    $('#connecting-notification').slideUp(animationDuration).text("")
   }
   self.clearNotification = clearNotification
+  
+  /*
+   * Public - Fetches the message currently displayed on the notification
+  */
+  var getNotificationMessage = function () {
+    return $('#connecting-notification').text()
+  }
+  self.getNotificationMessage = getNotificationMessage
 
   /*
    * Public - Displays the current game id to all connected players
