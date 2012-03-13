@@ -120,7 +120,11 @@ var view = (function (us) {
    * Public - Displays the current game id to all connected players
   */
   var displayGameID = function (gameID) {
+    $('#game-id').fadeTo(animationDuration, 1.0)
     $('#game-id').text("Game ID: " + gameID + " ")
+    setTimeout(function () {
+      $('#game-id').fadeto(animationDuration, 0.3) // fade to 30% opacity
+    }, 2000)
   }
   self.displayGameID = displayGameID
 
@@ -270,6 +274,13 @@ var view = (function (us) {
       $(this).removeClass("pressed")
     }).mouseout(function (event) {
       $(this).removeClass("pressed")
+    })
+    
+    /* auto-fade game-id when inactive */
+    $('#game-id').hover(function() {
+      $(this).fadeTo(animationDuration, 1.0)
+    }, function() {
+      $(this).fadeTo(animationDuration, 0.3)
     })
 
     /* Keyboard shortcuts */
