@@ -16,92 +16,6 @@ var view = (function (us) {
   var animationDuration = 200 // in ms
   
   /*
-   * DEPRECATED
-  */
-  var render = function(state) {
-    console.log("Render is Deprecated, Do Not Use. Use view.update(gameState) instead")
-
-    var getViewsForLane = function(laneData) {
-      var getViewForCard = function(cardData) {
-        return $('<div />', {
-          "class": "card",
-          html: ("<div class='cardLabelTop'>" + cardData.cardType + "</div>" +
-                 "<div class='cardLabelBottom'>" + cardData.cardType + "</div>")
-        }).addClass(cardData.color)
-      }
-
-      var getViewForBaseCard = function (modifierCards) {
-        var modifiers = us.reduce(modifierCards, function (memo, card) {
-          return memo + card.cardType.charAt(0) + card.cardType.charAt(1) + ","
-        }, "")
-
-        if (modifiers) { modifiers = '<br>(' + modifiers + ')' }
-
-        return $('<div />', {
-          "class": "base card none",
-          html: ("base" + modifiers)
-        })
-      }
-
-      var laneView = $("<div />");
-      var i = 0
-
-      // The base itself
-      laneView.append(getViewForBaseCard(laneData.modifiers).attr({
-        toLocation: 'base',
-        fromLocation: "hand",
-        baseId: laneData.id
-      }))
-      // Top stack
-      for (i = 0; i < laneData.p1.length; i++) {
-        // css fix for cards so they stack going upwards instead of down
-        laneView.append(getViewForCard(laneData.p1[i]).attr({
-          location: 'base_p1',
-          baseId: laneData.id
-        }).css('margin-top', -180-i*30))
-      }
-      // Bottom stack
-      for (i = 0; i < laneData.p2.length; i++) {
-        laneView.append(getViewForCard(laneData.p2[i]).attr({
-          location: 'base_p2',
-          baseId: laneData.id
-        }).css('margin-top', 60+i*30))
-      }
-
-      return laneView
-    }
-
-    var renderPlayerHandAndDiscard = function (playerName, index) {
-      var playerData = state[playerName]
-
-      // Render the cards in their hand and discard
-      us.each(["hand", "discard"], function (position) {
-        // Clear old card color
-        $("#player" + (index + 1) + "-" + position).removeClass('red blue green none')
-        if (playerData[position.toLowerCase()]) {
-          // Set new color
-          $("#player" + (index + 1) + "-" + position).addClass(playerData[position.toLowerCase()].color)
-          // Set card type label
-          $("#player" + (index + 1) + "-" + position).text(playerData[position.toLowerCase()].cardType)
-        } else {
-          // Clear card type label
-          $("#player" + (index + 1) + "-" + position).text(position)
-        }
-      })
-    }
-
-    us.each(["p1", "p2"], function (playerName, index) {
-      renderPlayerHandAndDiscard(playerName, index)
-    })
-
-    $('.lane').html("");
-    us.each(state.bases, function (laneData, currentLaneNumber) {
-      $('.lane').eq(currentLaneNumber).html(getViewsForLane(laneData))
-    })
-  }
-  self.render = render
-
-  /*
    * Public - Updates the view to gameState passed in, attempting to alter
    * only what has changed since the last update
   */
@@ -135,7 +49,7 @@ var view = (function (us) {
     
     // If a lane was added or removed since last update, 
     // then all lanes have most likely shifted position and must be re-rendered
-    if ($('.base').filter(":visible").length !== state.bases.length) {
+    if ($('.base').length != state.bases.length) {
       $('.lane').children(".card").hide().not(".base").removeClass("red blue green none")
     }
     
@@ -156,11 +70,11 @@ var view = (function (us) {
           // Get the first empty card spot and start updating from there.
           // Since the only thing a player can do is add cards to a stack,
           // there's no need to bother with anything that was already rendered
-          var stackUI = currentLaneUI.children("." + stackDirection + "stack")
-          var cardNumber = stackUI.filter(":visible").length
-          var stack = state.bases[currentLaneNumber][stackDirection]
-          var cardsInStack = stack.length
-          var cardData
+          var stackUI = currentLaneUI.children("." + stackDirection + "stack"),
+              cardNumber = stackUI.filter(":visible").length,
+              stack = state.bases[currentLaneNumber][stackDirection],
+              cardsInStack = stack.length,
+              cardData
           
           while (cardNumber < cardsInStack) {
             cardData = stack[cardNumber]
