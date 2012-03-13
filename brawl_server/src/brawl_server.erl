@@ -2,7 +2,7 @@
 -behavior(gen_server).
 -include("include/brawl_req.hrl").
 -export([start/0, start_link/0, init/1, handle_call/3, terminate/2]).
--export([new_game/0, start_game/1, play/4, pick_deck/3,
+-export([new_game/0, start_game/1, play/4, pick_deck/3, reset/1,
          state/1, stop/1, exists/1, leave/2, join/2, get_players/1, get_decks/1]).
 
 new_game() ->
@@ -18,6 +18,9 @@ new_game() ->
 
 start_game(GameId) ->
   call_game(GameId, start_game).
+
+reset(GameId) ->
+  call_game(GameId, reset).
 
 play(GameId, PlayerId, From, To) ->
   call_game(GameId, {move, PlayerId, From, To}).
@@ -77,6 +80,8 @@ visible_state(none) ->
 visible_state({Bases, { P1Hand, P1Discard, _ }, { P2Hand, P2Discard, _ }}) ->
   {Bases, {P1Hand, P1Discard}, {P2Hand, P2Discard}}.
 
+handle_call(reset, _From, Game) ->
+  {reply, reset, Game#brawl_game{state=none}};
 handle_call(stop, _From, Game) ->
   {stop, normal, ok, Game};
 handle_call({pick_deck, PlayerId, Deck}, _From, Game) ->
