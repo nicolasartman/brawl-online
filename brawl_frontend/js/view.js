@@ -237,7 +237,7 @@ var view = (function (us) {
       })
     })
     $('#join-game').click(function (event) {
-      var gameID = $('#existing-game-container input').val()
+      var gameID = $('#existing-game input').val()
       $('#choose-game-dialog').fadeOut(animationDuration)
 
       // Show the gameID to the user so they can send it to friends
