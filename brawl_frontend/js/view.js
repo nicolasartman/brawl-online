@@ -58,9 +58,9 @@ var view = (function (us) {
       if (currentLaneNumber < state.bases.length) {
         // update the base
         currentLaneUI.find(".base")
-        .html("<br /><b>Base</b>" + 
+        .html("<br />Base" + 
           us.reduce(state.bases[currentLaneNumber].modifiers, function (memo, card) {
-            return memo + "<i>[" + card.cardType + "]</i><br />"
+            return memo + "[" + card.cardType + "]<br />"
           }, "<br />"))
         .attr('baseid', state.bases[currentLaneNumber].id)
         .show()
