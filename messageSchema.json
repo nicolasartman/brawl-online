@@ -42,13 +42,15 @@
 
 // Get game state
 {
-  "messageType": "get_game_state"
+  "messageType": "get_game_state",
+  "gameID": number
 }
 
 // Rematch
 
 {
-  "messageType": "rematch"
+  "messageType": "rematch",
+  "gameID": number
 }
 
 

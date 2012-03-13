@@ -135,6 +135,11 @@ $(document).ready(function ($) {
     }
     if (message.messageType === "error") {
       view.showNotification("Error: " + message.data.errorMessage)
+      setInterval(function () {
+        if (view.getNotificationMessage() == "Error: " + message.data.errorMessage) {
+          view.clearNotification()          
+        }
+      }, 3000)
     }
   }
   socket.onerror = function (error) {
