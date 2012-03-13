@@ -182,7 +182,7 @@ var view = (function (us) {
    * Public - Shows the play area to the user
   */
   var showPlayArea = function () {
-    $('.dialog, #logo').fadeIn(animationDuration)
+    $('.dialog, #logo').fadeOut(animationDuration)
     $('#play-area').show(500)
   }
   self.showPlayArea = showPlayArea
