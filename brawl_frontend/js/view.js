@@ -131,7 +131,7 @@ var view = (function (us) {
     $('#game-id').fadeTo(animationDuration, 1.0)
     $('#game-id').text("Game ID: " + gameID + " ")
     setTimeout(function () {
-      $('#game-id').fadeto(animationDuration, 0.3) // fade to 30% opacity
+      $('#game-id').fadeto(animationDuration, 0.5) // fade to 30% opacity
     }, 2000)
   }
   self.displayGameID = displayGameID
@@ -288,7 +288,7 @@ var view = (function (us) {
     $('#game-id').hover(function() {
       $(this).fadeTo(animationDuration, 1.0)
     }, function() {
-      $(this).fadeTo(animationDuration, 0.3)
+      $(this).fadeTo(animationDuration, 0.5)
     })
 
     /* Keyboard shortcuts */
