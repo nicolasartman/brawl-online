@@ -170,6 +170,7 @@ var view = (function (us) {
    * Public - Shows the play area to the user
   */
   var showPlayArea = function () {
+    $('.dialog, #logo').fadeIn(animationDuration)
     $('#play-area').show(500)
   }
   self.showPlayArea = showPlayArea
@@ -211,6 +212,31 @@ var view = (function (us) {
       }
     })
 
+    // Choose new game or join existing game dialog
+    $('#new-game').click(function (event) {
+      $('#choose-game-dialog').fadeOut(animationDuration)
+      $.get('http://' + window.location.host + '/brawl/new_game', function (data, textStatus, xhr) {
+        var gameID = JSON.parse(data).gameID
+        
+        // Show the gameID to the user so they can send it to friends
+        displayGameID(gameID)
+        
+        server.sendConnect(gameID)
+      })
+    })
+    $('#join-game').click(function (event) {
+      var gameID = $('#existing-game-container input').val()
+      $('#choose-game-dialog').fadeOut(animationDuration)
+
+      // Show the gameID to the user so they can send it to friends
+      displayGameID(gameID)
+
+      server.sendConnect(gameID)
+    })
+    $('#existing-game input').focus(function(event) {
+      $(this).val("")
+    })
+
     // Choose player type dialog
     $('#choose-player-type-dialog .player-type-choice').click(function (event) {
       if (!$(event.target).hasClass("disabled")) {
@@ -231,36 +257,19 @@ var view = (function (us) {
       server.sendChooseCharacter($(event.target).attr("id"))
     })
 
-    // Choose new game or join existing game dialog
-    $('#new-game').click(function (event) {
-      $('#choose-game-dialog').fadeOut(animationDuration)
-      $.get('http://' + window.location.host + '/brawl/new_game', function (data, textStatus, xhr) {
-        var gameID = JSON.parse(data).gameID
-        
-        // Show the gameID to the user so they can send it to friends
-        displayGameID(gameID)
-
-        // TODO: fix key so it's gameID
-        server.sendConnect(gameID)
-      })
-    })
-    $('#existing-game').click(function (event) {
-      var gameID = $('#existing-game-container input').val()
-      $('#choose-game-dialog').fadeOut(animationDuration)
-
-      // Show the gameID to the user so they can send it to friends
-      displayGameID(gameID)
-
-      server.sendConnect(gameID)
-    })
-    $('#existing-game-container input').focus(function(event) {
-      $(this).val("")
-    })
-
     /* Game Over / Rematch */
     $('#game-over-dialog #rematch').click(function (event) {
       server.sendRematch()
       $('#game-over-dialog').fadeOut(animationDuration)
+    })
+    
+    /* additional responsiveness for choice buttons */
+    $('.choice').mousedown(function (event) {
+      $(this).addClass("pressed")
+    }).mouseup(function (event) {
+      $(this).removeClass("pressed")
+    }).mouseout(function (event) {
+      $(this).removeClass("pressed")
     })
 
     /* Keyboard shortcuts */
