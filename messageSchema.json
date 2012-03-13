@@ -125,7 +125,7 @@
 
 // Used in case a player disconnects, can implement later
 {
-  "messageType": "pause"å
+  "messageType": "pause"
 }
 
 // Used after an opponent reconnects, can implement later
