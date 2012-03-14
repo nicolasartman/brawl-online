@@ -21,10 +21,14 @@ $(document).ready(function ($) {
   var debug = window.location.href.indexOf("debug") !== -1 ? true : false
   
   try {
-    // socket = new WebSocket("ws://ps86615.dreamhostps.com:8080/play")
-    socket = new WebSocket("ws://" + window.location.host + ":8080/play")
+    socket = new WebSocket("ws://ps86615.dreamhostps.com:8080/play")
+    // socket = new WebSocket("ws://" + window.location.host + ":8080/play")
   } catch (e) {
-    socket = new MozWebSocket("ws://" + window.location.host + ":8080/play")
+    try {
+      socket = new MozWebSocket("ws://" + window.location.host + ":8080/play")      
+    } catch (ex) {
+      console.log("This client does not support websockets at all")
+    }
   }
 
   // Initialize view actions so the view can send messages back through the socket
@@ -77,8 +81,14 @@ $(document).ready(function ($) {
       }))
     }
   })
+  
+  // In case the server never connects, show a timeout message to inform the user
+  var connectionTimeout = setTimeout(function () {
+    view.showFailedToConnectMessage()
+  }, 5000)
 
   socket.onopen = function() {
+    clearTimeout(connectionTimeout)
     view.showChooseGameDialog()
   }
   socket.onmessage = function(msg) {

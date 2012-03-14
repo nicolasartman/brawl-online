@@ -111,6 +111,9 @@
         </div>
       </div>
     </div>
+    <div id="footer">
+      (c) 2012 Nicolas Artman and Kelly Wong. All rights reserved. <a href="https://github.com/nicolasartman/brawl-online">Source on Github</a>.
+    </div>
     <!-- ============================= -->
     <!-- = Dialogs and Notifications = -->
     <!-- ============================= -->
@@ -118,6 +121,12 @@
       Connecting to game...
     </div>
     <div id="game-id"></div>
+    <div class="dialog" id="failed-to-connect">
+      <div class="title">Failed to Connect to Server</div>
+      <div id="connection-timeout-message">
+        Couldn't connect to the server. This could be due to a few things, such as your browser not supporting WebSockets or a corporate firewall at your company. If you like, shoot us an email with your browser & version and OS and version, and we'll look into it.
+      </div>
+    </div>
     <div class="dialog" id="choose-game-dialog">
       <div class="title">Create or Join a Game</div>
       <div class="choice" id="new-game">

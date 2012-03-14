@@ -132,9 +132,17 @@ var view = (function (us) {
     $('#game-id').text("Game ID: " + gameID + " ")
     setTimeout(function () {
       $('#game-id').fadeTo(animationDuration, 0.5) // fade to 30% opacity
-    }, 2000)
+    }, 5000)
   }
   self.displayGameID = displayGameID
+
+  /*
+   * Public - Hides the message that displays while trying to connect to the server
+  */
+  var showFailedToConnectMessage = function () {
+    $('#failed-to-connect').show()
+  }
+  self.showFailedToConnectMessage = showFailedToConnectMessage
 
   /*
    * Public - Prompts the player to start a new game or choose an existing one
@@ -284,11 +292,17 @@ var view = (function (us) {
       $(this).removeClass("pressed")
     })
     
-    /* auto-fade game-id when inactive */
-    $('#game-id').hover(function() {
+    /* auto-fade game-id and footer when inactive */
+    $('#game-id').hover(function () {
       $(this).fadeTo(animationDuration, 1.0)
-    }, function() {
+    }, function () {
       $(this).fadeTo(animationDuration, 0.5)
+    })
+
+    $('#footer').hover(function () {
+      $(this).fadeTo(animationDuration, 1.0)
+    }, function () {
+      $(this).fadeTo(animationDuration, 0.2)
     })
 
     /* Keyboard shortcuts */
@@ -298,10 +312,6 @@ var view = (function (us) {
       }
       else if (event.which === 81 || event.which === 80) {
         $('#player-1-hand').click()
-      }
-      // TODO: remove
-      else if (event.which == 68) {
-        update()
       }
     })
   }
