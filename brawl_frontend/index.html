@@ -121,12 +121,20 @@
       Connecting to game...
     </div>
     <div id="game-id"></div>
+    <!-- Critical Failure Messages -->
     <div class="dialog" id="failed-to-connect">
       <div class="title">Failed to Connect to Server</div>
-      <div id="connection-timeout-message">
+      <div>
         Couldn't connect to the server. This could be due to a few things, such as your browser not supporting WebSockets or a corporate firewall at your company. If you like, shoot us an email with your browser & version and OS and version, and we'll look into it.
       </div>
     </div>
+    <div class="dialog" id="websockets-not-supported">
+      <div class="title">Websockets Required</div>
+      <div class>
+        Unfortunately, your browser does not support <b>Websockets</b>, a technology that we require to ensure Brawl plays quickly and smoothly, just like the real game. <b>Websockets</b> are currently supported by <br/><br/> <strong>Firefox 6+, Safari 5+, and Chrome 14+.</strong>
+      </div>
+    </div>
+    <!-- Standard Menu Dialogs -->
     <div class="dialog" id="choose-game-dialog">
       <div class="title">Create or Join a Game</div>
       <div class="choice" id="new-game">

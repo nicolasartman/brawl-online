@@ -7,7 +7,9 @@
  WebSocket: true,
  MozWebSocket: true,
  gameState: true,
- window: true
+ window: true,
+ setTimeout: true,
+ clearTimeout: true
 */
 
 $(document).ready(function ($) {
@@ -20,14 +22,22 @@ $(document).ready(function ($) {
   /* debug mode */
   var debug = window.location.href.indexOf("debug") !== -1 ? true : false
   
+  // In case the server never connects, show a timeout message to inform the user
+  var connectionTimeout = setTimeout(function () {
+    view.showFailedToConnectMessage()
+  }, 5000)
+  
+  // Connect with chrome/safari
   try {
     // socket = new WebSocket("ws://ps86615.dreamhostps.com:8080/play")
     socket = new WebSocket("ws://" + window.location.host + ":8080/play")
   } catch (e) {
+    // Connect with firefox
     try {
       socket = new MozWebSocket("ws://" + window.location.host + ":8080/play")      
     } catch (ex) {
-      console.log("This client does not support websockets at all")
+      clearTimeout(connectionTimeout)
+      view.showWebsocketsNotSupportedMessage()
     }
   }
 
@@ -81,11 +91,6 @@ $(document).ready(function ($) {
       }))
     }
   })
-  
-  // In case the server never connects, show a timeout message to inform the user
-  var connectionTimeout = setTimeout(function () {
-    view.showFailedToConnectMessage()
-  }, 5000)
 
   socket.onopen = function() {
     clearTimeout(connectionTimeout)

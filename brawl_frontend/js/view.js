@@ -137,12 +137,21 @@ var view = (function (us) {
   self.displayGameID = displayGameID
 
   /*
-   * Public - Hides the message that displays while trying to connect to the server
+   * Public - Informs the user that the server couldn't be reached and the game won't run
   */
   var showFailedToConnectMessage = function () {
     $('#failed-to-connect').show()
   }
   self.showFailedToConnectMessage = showFailedToConnectMessage
+
+  /*
+   * Public - Informs the user that their browser does not support websockets and they should
+   * consider getting a different one for the time being
+  */
+  var showWebsocketsNotSupportedMessage = function () {
+    $('#websockets-not-supported').show()
+  }
+  self.showWebsocketsNotSupportedMessage = showWebsocketsNotSupportedMessage
 
   /*
    * Public - Prompts the player to start a new game or choose an existing one
