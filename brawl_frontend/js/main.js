@@ -23,14 +23,15 @@ $(document).ready(function ($) {
   var debug = window.location.href.indexOf("debug") !== -1 ? true : false
   
   // In case the server never connects, show a timeout message to inform the user
+  // For the purposes of such a fast-paced game, 5 seconds will be considered 'never'
   var connectionTimeout = setTimeout(function () {
     view.showFailedToConnectMessage()
   }, 5000)
   
   // Connect with chrome/safari
   try {
-    // socket = new WebSocket("ws://ps86615.dreamhostps.com:8080/play")
-    socket = new WebSocket("ws://" + window.location.host + ":8080/play")
+    socket = new WebSocket("ws://ps86615.dreamhostps.com:8080/play")
+    // socket = new WebSocket("ws://" + window.location.host + ":8080/play")
   } catch (e) {
     // Connect with firefox
     try {

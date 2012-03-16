@@ -4,30 +4,31 @@
  _: true,
  us: true,
  gameState: true,
- window: true */
+ window: true,
+ setTimeout */
 
 var us = _.noConflict();
 
 var view = (function (us) {
   "use strict";
   var self = {}
-  
+
   // Private Vars
   var animationDuration = 200 // in ms
-  
+
   /*
    * Public - Updates the view to gameState passed in, attempting to alter
    * only what has changed since the last update
   */
   var update = function (state) {
-    
+
     // = Update Hands and Discards =
-    
+
     var playerData
-    
+
     us.each(["player-1", "player-2"], function (playerName, playerNumber) {
       playerData = state["p" + (playerNumber + 1)] // TODO: update naming to fix convention
-      
+
       us.each(["hand", "discard"], function (position) {
         var positionUIElement = $("#" + playerName + "-" + position)
         // Clear old card color
@@ -44,27 +45,27 @@ var view = (function (us) {
         }
       })
     })
-    
+
     // = Update Lanes =
-    
-    // If a lane was added or removed since last update, 
+
+    // If a lane was added or removed since last update,
     // then all lanes have most likely shifted position and must be re-rendered
     if ($('.base').filter(":visible").length !== state.bases.length) {
       $('.lane').children(".card").hide().not(".base").removeClass("red blue green none")
     }
-    
-    $('.lane').each(function (currentLaneNumber) { 
+
+    $('.lane').each(function (currentLaneNumber) {
       var currentLaneUI = $(this)
       if (currentLaneNumber < state.bases.length) {
         // update the base
         currentLaneUI.find(".base")
-        .html("<br />Base" + 
+        .html("<br />Base" +
           us.reduce(state.bases[currentLaneNumber].modifiers, function (memo, card) {
             return memo + "[" + card.cardType + "]<br />"
           }, "<br />"))
         .attr('baseid', state.bases[currentLaneNumber].id)
         .show()
-        
+
         // update the stacks
         us.each(['p1', 'p2'], function (stackDirection) {
           // Get the first empty card spot and start updating from there.
@@ -75,16 +76,16 @@ var view = (function (us) {
               stack = state.bases[currentLaneNumber][stackDirection],
               cardsInStack = stack.length,
               cardData
-          
+
           while (cardNumber < cardsInStack) {
             cardData = stack[cardNumber]
             stackUI.eq(cardNumber)
                    .text(cardData.cardType)
                    .addClass(cardData.color)
                    .show()
-            
+
             cardNumber++
-          }            
+          }
         })
       } else {
         $(this).find(".card").hide().not(".base").removeClass("red blue green none")
@@ -115,7 +116,7 @@ var view = (function (us) {
     $('#connecting-notification').slideUp(animationDuration).text("")
   }
   self.clearNotification = clearNotification
-  
+
   /*
    * Public - Fetches the message currently displayed on the notification
   */
@@ -166,7 +167,7 @@ var view = (function (us) {
   */
   var showChoosePlayerTypeDialog = function (playerSlots) {
     $('#choose-player-type-dialog').fadeIn(animationDuration)
-    
+
     us.each(["player1", "player2"], function (player) {
       if (playerSlots[player]) {
         $('#choose-player-type-dialog #' + player).removeClass('disabled')
@@ -193,13 +194,17 @@ var view = (function (us) {
     $('#game-over-dialog #winner').text(message)
   }
   self.showGameOverDialog = showGameOverDialog
-  
-  
+
+
   /*
    * Public - Shows the play area to the user
   */
   var showPlayArea = function () {
     $('.dialog, #logo').fadeOut(animationDuration)
+
+    // Reset all cards to hidden so the first render is from scratch
+    $('.lane').children(".card").hide().not(".base").removeClass("red blue green none")
+    
     $('#play-area').show(500)
   }
   self.showPlayArea = showPlayArea
@@ -217,28 +222,27 @@ var view = (function (us) {
    * Public - Initializes the view
   */
   var init = function (server) {
+    // Card clicked events for all base cards and players' hands/decks/discards
+    $('.base.card, .player-area .card').click(function (event) {
+      console.log("Clicked card")
+      server.sendCardMove($(event.target).attr("fromLocation"),
+                          $(event.target).attr("toLocation"),
+                          $(event.target).attr("baseid"))
+      event.stopPropagation()
+    })
     // Play on top/bottom of lane when the lane or the lane itself is clicked
     $('.lane').click(function (event) {
-      // Ignore clicked base cards and allow the click to keep bubbling up
-      if (!$(event.target).hasClass("base")) {
-        server.sendCardMove("hand",
-          ((event.pageY - $(this).offset().top < $(this).height() / 2) ? "base_p1" : "base_p2"),
-          ($(this).find('div.base').first().attr('baseid')))
-        event.stopPropagation()
-      }
+      console.log("Clicked lane")
+      server.sendCardMove("hand",
+        ((event.pageY - $(this).offset().top < $(this).height() / 2) ? "base_p1" : "base_p2"),
+        ($(this).find('div.base').first().attr('baseid')))
+      event.stopPropagation()
     })
     $('#play-area').click(function (event) {
-      // Catch bubbled up card events
-      if ($(event.target).hasClass('card')) {
-        server.sendCardMove($(event.target).attr("fromLocation"),
-                     $(event.target).attr("toLocation"),
-                     $(event.target).attr("baseid"))
-      }
-      // Else attempt to play a new base on the left or right
-      else {
-        var to = (event.pageX - $(this).offset().left < $(this).width() / 2) ? "base_left" : "base_right"
-        server.sendCardMove("hand", to)
-      }
+      console.log("Clicked play area")
+      var to = (event.pageX - $(this).offset().left < $(this).width() / 2) ? "base_left" : "base_right"
+      server.sendCardMove("hand", to)
+      event.stopPropagation()
     })
 
     // Choose new game or join existing game dialog
@@ -246,10 +250,10 @@ var view = (function (us) {
       $('#choose-game-dialog').fadeOut(animationDuration)
       $.get('http://' + window.location.host + '/brawl/new_game', function (data, textStatus, xhr) {
         var gameID = JSON.parse(data).gameID
-        
+
         // Show the gameID to the user so they can send it to friends
         displayGameID(gameID)
-        
+
         server.sendConnect(gameID)
       })
     })
@@ -262,7 +266,7 @@ var view = (function (us) {
 
       server.sendConnect(gameID)
     })
-    $('#existing-game input').focus(function(event) {
+    $('#existing-game input').focus(function (event) {
       $(this).val("")
     })
 
@@ -276,7 +280,7 @@ var view = (function (us) {
         } else {
           server.sendGetGameState()
           showPlayArea()
-        }        
+        }
       }
     })
 
@@ -291,7 +295,7 @@ var view = (function (us) {
       server.sendRematch()
       $('#game-over-dialog').fadeOut(animationDuration)
     })
-    
+
     /* additional responsiveness for choice buttons */
     $('.choice').mousedown(function (event) {
       $(this).addClass("pressed")
@@ -300,7 +304,7 @@ var view = (function (us) {
     }).mouseout(function (event) {
       $(this).removeClass("pressed")
     })
-    
+
     /* auto-fade game-id and footer when inactive */
     $('#game-id').hover(function () {
       $(this).fadeTo(animationDuration, 1.0)
