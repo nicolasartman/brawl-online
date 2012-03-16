@@ -231,11 +231,19 @@ var view = (function (us) {
     })
     // Play on top/bottom of lane when the lane or the lane itself is clicked
     $('.lane').click(function (event) {
-      server.sendCardMove("hand",
-        ((event.pageY - $(this).offset().top < $(this).height() / 2) ? "base_p1" : "base_p2"),
-        ($(this).find('div.base').first().attr('baseid')))
-      event.stopPropagation()
+      // If there's a base in the lane, they are trying to play on one of its stacks
+      if ($(this).children(".base").filter(':visible').length) {        
+        server.sendCardMove("hand",
+          ((event.pageY - $(this).offset().top < $(this).height() / 2) ? "base_p1" : "base_p2"),
+          ($(this).find('div.base').first().attr('baseid')))
+        event.stopPropagation()
+      } 
+      // Otherwise, they probably want to play a new base in the empty lane
+      else {
+        server.sendCardMove("hand", "base_right")
+      }
     })
+    // Play a base on the left or right
     $('#play-area').click(function (event) {
       var to = (event.pageX - $(this).offset().left < $(this).width() / 2) ? "base_left" : "base_right"
       server.sendCardMove("hand", to)

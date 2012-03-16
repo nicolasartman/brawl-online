@@ -30,8 +30,8 @@ $(document).ready(function ($) {
   
   // Connect with chrome/safari
   try {
-    socket = new WebSocket("ws://ps86615.dreamhostps.com:8080/play")
-    // socket = new WebSocket("ws://" + window.location.host + ":8080/play")
+    // socket = new WebSocket("ws://ps86615.dreamhostps.com:8080/play")
+    socket = new WebSocket("ws://" + window.location.host + ":8080/play")
   } catch (e) {
     // Connect with firefox
     try {
