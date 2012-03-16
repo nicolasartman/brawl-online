@@ -224,7 +224,6 @@ var view = (function (us) {
   var init = function (server) {
     // Card clicked events for all base cards and players' hands/decks/discards
     $('.base.card, .player-area .card').click(function (event) {
-      console.log("Clicked card")
       server.sendCardMove($(event.target).attr("fromLocation"),
                           $(event.target).attr("toLocation"),
                           $(event.target).attr("baseid"))
@@ -232,14 +231,12 @@ var view = (function (us) {
     })
     // Play on top/bottom of lane when the lane or the lane itself is clicked
     $('.lane').click(function (event) {
-      console.log("Clicked lane")
       server.sendCardMove("hand",
         ((event.pageY - $(this).offset().top < $(this).height() / 2) ? "base_p1" : "base_p2"),
         ($(this).find('div.base').first().attr('baseid')))
       event.stopPropagation()
     })
     $('#play-area').click(function (event) {
-      console.log("Clicked play area")
       var to = (event.pageX - $(this).offset().left < $(this).width() / 2) ? "base_left" : "base_right"
       server.sendCardMove("hand", to)
       event.stopPropagation()
