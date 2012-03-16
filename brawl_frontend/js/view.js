@@ -38,10 +38,10 @@ var view = (function (us) {
           // Set new color
           positionUIElement.addClass(playerData[position.toLowerCase()].color)
           // Set card type label
-          positionUIElement.text(playerData[position.toLowerCase()].cardType)
+          positionUIElement.children('.card-label').text(playerData[position.toLowerCase()].cardType)
         } else {
           // Clear card type label
-          positionUIElement.text(position)
+          positionUIElement.children('.card-label').text(position)
         }
       })
     })
@@ -59,10 +59,10 @@ var view = (function (us) {
       if (currentLaneNumber < state.bases.length) {
         // update the base
         currentLaneUI.find(".base")
-        .html("<br />Base" +
+        .html("Base<span class='base-modifier'>" +
           us.reduce(state.bases[currentLaneNumber].modifiers, function (memo, card) {
             return memo + "[" + card.cardType + "]<br />"
-          }, "<br />"))
+          }, "<br />") + "</span>")
         .attr('baseid', state.bases[currentLaneNumber].id)
         .show()
 
@@ -80,9 +80,10 @@ var view = (function (us) {
           while (cardNumber < cardsInStack) {
             cardData = stack[cardNumber]
             stackUI.eq(cardNumber)
-                   .text(cardData.cardType)
                    .addClass(cardData.color)
                    .show()
+                   .children(".card-label")
+                   .text(cardData.cardType)
 
             cardNumber++
           }
@@ -224,9 +225,9 @@ var view = (function (us) {
   var init = function (server) {
     // Card clicked events for all base cards and players' hands/decks/discards
     $('.base.card, .player-area .card').click(function (event) {
-      server.sendCardMove($(event.target).attr("fromLocation"),
-                          $(event.target).attr("toLocation"),
-                          $(event.target).attr("baseid"))
+      server.sendCardMove($(this).attr("fromLocation"),
+                          $(this).attr("toLocation"),
+                          $(this).attr("baseid"))
       event.stopPropagation()
     })
     // Play on top/bottom of lane when the lane or the lane itself is clicked

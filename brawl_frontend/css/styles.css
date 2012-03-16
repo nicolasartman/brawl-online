@@ -45,7 +45,7 @@ div {
   line-height: 40px;
   padding-left: 20px;
   padding-right: 20px;
-  font-size: 24pt;
+  font-size: 2em;
   color: #DDD;
 }
 
@@ -307,7 +307,6 @@ div {
 /* default/blank card */
 .card {
   font: 1.3em "Marvel", "Trebuchet MS", Verdana, sans-serif;
-/*  font-weight: 700;*/
   text-transform:uppercase;
   border: 2px dotted #999;
   color: #CCC;
@@ -315,14 +314,6 @@ div {
   width: 90px;
   height: 120px;
   text-align: center;
-}
-
-.centered-card-text {
-  line-height: 120px;
-}
-
-.p1stack {
-  line-height: 210px;
 }
 
 /* actual card colors (ignoring placeholder cards) */
@@ -348,14 +339,37 @@ div {
   background-color: #DDD;
 }
 
+/* card labels */
+.card-label {
+  position: absolute;
+}
+
+.card-label-left {
+  text-align: left;
+  left: 0;
+  top: 0;
+}
+
+.card-label-right {
+  text-align: right;
+  right: 0;
+  bottom: 0;
+}
+
+.deck {
+  line-height: 120px;
+}
+
 
 .base.card {
   margin-top: -60px;
+  font-weight: bold;
+  float: center;
 }
 
-/* FIXME: slight hack */
-.base.card i {
-  font-size: 1em;
+.base .base-modifier {
+  font-weight: normal;
+  font-size: 12pt;
 }
 
 #lanes {
@@ -387,11 +401,3 @@ div {
   margin-left: -45px;
   top: 50%;
 }
-
-
-.base {
-  line-height: 20px;
-  float: center;
-}
-
-
