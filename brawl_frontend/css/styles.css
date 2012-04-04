@@ -288,9 +288,9 @@ div {
 .player-area {
   position: relative;
   width: 90px;
-  height: 370px;
+  height: 410px;
   top:50%;
-  margin-top:-185px;
+  margin-top:-205px;
 /*  z-index: 5;*/
 }
 
@@ -357,7 +357,12 @@ div {
   bottom: 0;
 }
 
+.hand {
+  margin-bottom: 20px;
+}
+
 .deck {
+/*  margin-top: 20px;*/
   line-height: 120px;
 }
 
@@ -374,10 +379,9 @@ div {
   font-weight: bold;
   float: center;
 }
+
 .hovered-base {
   background-color: #999;
-/*  border-color: #DDD;*/
-/*  color: #DDD;*/
 }
 
 .base .base-modifier {
