@@ -123,21 +123,21 @@ div {
   background: #494949;
   text-align: center;
   border: 1px solid #999;
-  
+
   /* For browsers that support css3 gradients */
   background: -moz-linear-gradient(top,  rgba(73, 73, 73, 1) 0%, rgba(51, 51, 51, 1) 100%);
   background: -webkit-linear-gradient(top,  rgba(73, 73, 73, 1) 0%, rgba(51, 51, 51, 1) 100%);
-  background: linear-gradient(top,  rgba(73, 73, 73, 1) 0%, rgba(51, 51, 51, 1) 100%);  
+  background: linear-gradient(top,  rgba(73, 73, 73, 1) 0%, rgba(51, 51, 51, 1) 100%);
 }
 
 .choice:hover {
   background: #666;
   border: 1px solid #CCC;
-  
+
   /* For browsers that support css3 gradients */
   background: -moz-linear-gradient(top,  rgba(102, 102, 102, 1) 0%, rgba(65, 65, 65, 1) 100%);
   background: -webkit-linear-gradient(top,  rgba(102, 102, 102, 1) 0%, rgba(65, 65, 65, 1) 100%);
-  background: linear-gradient(top,  rgba(102, 102, 102, 1) 0%, rgba(65, 65, 65, 1) 100%);  
+  background: linear-gradient(top,  rgba(102, 102, 102, 1) 0%, rgba(65, 65, 65, 1) 100%);
 }
 
 .choice.pressed {
@@ -339,6 +339,7 @@ div {
   background-color: #DDD;
 }
 
+
 /* card labels */
 .card-label {
   position: absolute;
@@ -360,11 +361,23 @@ div {
   line-height: 120px;
 }
 
+.deck:hover {
+  background-color: #333;
+}
+
+.hint-draw {
+  display: none;
+}
 
 .base.card {
   margin-top: -60px;
   font-weight: bold;
   float: center;
+}
+.hovered-base {
+  background-color: #999;
+/*  border-color: #DDD;*/
+/*  color: #DDD;*/
 }
 
 .base .base-modifier {
@@ -379,7 +392,6 @@ div {
   margin-top: -300px;
   margin-left: -225px;
   height: 600px;
-/*  width: 465px;*/
   overflow: visible;
 }
 
@@ -390,7 +402,17 @@ div {
   height: 600px;
   border: 2px dotted #999;
   background-color: #333;
-/*  margin-top: -500px; */
+}
+
+.hovered-lane {
+  background-color: #272727;
+  background: rgb(48,48,48);
+  background: -moz-linear-gradient(top,  rgba(48,48,48,1) 0%, rgba(32,32,32,1) 50%, rgba(48,48,48,1) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(48,48,48,1)), color-stop(50%,rgba(32,32,32,1)), color-stop(100%,rgba(48,48,48,1)));
+  background: -webkit-linear-gradient(top,  rgba(48,48,48,1) 0%,rgba(32,32,32,1) 50%,rgba(48,48,48,1) 100%);
+  background: -o-linear-gradient(top,  rgba(48,48,48,1) 0%,rgba(32,32,32,1) 50%,rgba(48,48,48,1) 100%);
+  background: -ms-linear-gradient(top,  rgba(48,48,48,1) 0%,rgba(32,32,32,1) 50%,rgba(48,48,48,1) 100%);
+  background: linear-gradient(top,  rgba(48,48,48,1) 0%,rgba(32,32,32,1) 50%,rgba(48,48,48,1) 100%);
 }
 
 /* A card in a lane */

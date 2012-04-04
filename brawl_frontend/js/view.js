@@ -205,7 +205,7 @@ var view = (function (us) {
 
     // Reset all cards to hidden so the first render is from scratch
     $('.lane').children(".card").hide().not(".base").removeClass("red blue green none")
-    
+
     $('#play-area').show(500)
   }
   self.showPlayArea = showPlayArea
@@ -225,17 +225,17 @@ var view = (function (us) {
   var init = function (server) {
     // Card clicked events for all base cards and players' hands/decks/discards
     $('.base.card, .player-area .deck').click(function (event) {
-      
+
       // If they are drawing a card, discard their current hand first to make room
       if ($(this).attr('toLocation') === 'hand') {
         server.sendCardMove('hand', 'discard')
       }
-      
+
       server.sendCardMove($(this).attr("fromLocation"),
                           $(this).attr("toLocation"),
                           $(this).attr("baseid"))
 
-      // @P1: Their hand may now be empty (if they played onto a base, for example), 
+      // @P1: Their hand may now be empty (if they played onto a base, for example),
       // so fill it with the top card of their discard. This is a shortcut to
       // make the game a bit faster, so they don't have to draw from their discard
       // into their hand repeatedly. If they want a new card, they can just draw
@@ -246,9 +246,9 @@ var view = (function (us) {
     })
     // Play on top/bottom of lane when the lane or the lane itself is clicked
     $('.lane').click(function (event) {
-      
+
       // If there's a base in the lane, they are trying to play on one of its stacks
-      if ($(this).children(".base").filter(':visible').length) {        
+      if ($(this).children(".base").filter(':visible').length) {
         server.sendCardMove("hand",
           ((event.pageY - $(this).offset().top < $(this).height() / 2) ? "base_p1" : "base_p2"),
           ($(this).find('div.base').first().attr('baseid')))
@@ -258,15 +258,15 @@ var view = (function (us) {
       else {
         server.sendCardMove("hand", "base_right")
       }
-      
+
       // See @P1 above - basically, put the top card of their discard into their hand
-      server.sendCardMove('discard', 'hand')        
+      server.sendCardMove('discard', 'hand')
     })
     // Play a base on the left or right
     $('#play-area').click(function (event) {
       var to = (event.pageX - $(this).offset().left < $(this).width() / 2) ? "base_left" : "base_right"
       server.sendCardMove("hand", to)
-      
+
       // See @P1 above - basically, put the top card of their discard into their hand
       server.sendCardMove('discard', 'hand')
       event.stopPropagation()
@@ -353,6 +353,29 @@ var view = (function (us) {
       else if (event.which === 81 || event.which === 80) {
         $('#player-1-hand').click()
       }
+    })
+
+    /* hover effects and overall responsiveness enhancements */
+    $('.deck').hover(function () {
+      $(this).children('.deck-character').hide()
+      $(this).children('.hint-draw').show()
+    }, function () {
+      $(this).children('.hint-draw').hide()
+      $(this).children('.deck-character').show()
+    })
+
+    $('.base.none').mouseover(function (event) {
+      $(this).addClass('hovered-base')
+      event.stopPropagation()
+    }).mouseout(function (event) {
+      $(this).removeClass('hovered-base')
+    })
+
+    $('.lane').mouseover(function (event) {
+      // if they are hovering in the top half of the lane
+      $(this).addClass('hovered-lane')
+    }).mouseout(function () {
+      $(this).removeClass('hovered-lane')
     })
   }
   self.init = init
