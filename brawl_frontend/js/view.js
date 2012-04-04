@@ -214,8 +214,8 @@ var view = (function (us) {
    * Public - Sets the labels for the decks for both players
   */
   var setPlayerDeckNames = function (p1DeckName, p2DeckName) {
-    $('#player-1-deck').text(p1DeckName)
-    $('#player-2-deck').text(p2DeckName)
+    $('#player-1-deck').children('.deck-character').text(p1DeckName)
+    $('#player-2-deck').children('.deck-character').text(p2DeckName)
   }
   self.setPlayerDeckNames = setPlayerDeckNames
 
@@ -224,30 +224,51 @@ var view = (function (us) {
   */
   var init = function (server) {
     // Card clicked events for all base cards and players' hands/decks/discards
-    $('.base.card, .player-area .card').click(function (event) {
+    $('.base.card, .player-area .deck').click(function (event) {
+      
+      // If they are drawing a card, discard their current hand first to make room
+      if ($(this).attr('toLocation') === 'hand') {
+        server.sendCardMove('hand', 'discard')
+      }
+      
       server.sendCardMove($(this).attr("fromLocation"),
                           $(this).attr("toLocation"),
                           $(this).attr("baseid"))
+
+      // @P1: Their hand may now be empty (if they played onto a base, for example), 
+      // so fill it with the top card of their discard. This is a shortcut to
+      // make the game a bit faster, so they don't have to draw from their discard
+      // into their hand repeatedly. If they want a new card, they can just draw
+      // from the deck.
+      server.sendCardMove('discard', 'hand')
+
       event.stopPropagation()
     })
     // Play on top/bottom of lane when the lane or the lane itself is clicked
     $('.lane').click(function (event) {
+      
       // If there's a base in the lane, they are trying to play on one of its stacks
       if ($(this).children(".base").filter(':visible').length) {        
         server.sendCardMove("hand",
           ((event.pageY - $(this).offset().top < $(this).height() / 2) ? "base_p1" : "base_p2"),
           ($(this).find('div.base').first().attr('baseid')))
         event.stopPropagation()
-      } 
+      }
       // Otherwise, they probably want to play a new base in the empty lane
       else {
         server.sendCardMove("hand", "base_right")
       }
+      
+      // See @P1 above - basically, put the top card of their discard into their hand
+      server.sendCardMove('discard', 'hand')        
     })
     // Play a base on the left or right
     $('#play-area').click(function (event) {
       var to = (event.pageX - $(this).offset().left < $(this).width() / 2) ? "base_left" : "base_right"
       server.sendCardMove("hand", to)
+      
+      // See @P1 above - basically, put the top card of their discard into their hand
+      server.sendCardMove('discard', 'hand')
       event.stopPropagation()
     })
 
