@@ -282,7 +282,7 @@ var view = (function (us) {
         displayGameID(gameID)
 
         server.sendConnect(gameID)
-      })
+      }, "text") // sets encoding type for the response to text
     })
     $('#join-game').click(function (event) {
       var gameID = $('#existing-game input').val()
