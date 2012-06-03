@@ -32,30 +32,13 @@
         </div>
       </div>
       <div id="lanes">
-        <div class="lane">
-          <div class="card p1stack" style="margin-top: -180px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p1stack" style="margin-top: -210px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p1stack" style="margin-top: -240px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p1stack" style="margin-top: -270px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p1stack" style="margin-top: -300px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p1stack" style="margin-top: -330px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p1stack" style="margin-top: -360px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p1stack" style="margin-top: -390px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p1stack" style="margin-top: -420px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p1stack" style="margin-top: -450px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card base none" fromLocation="hand" toLocation="base" style="margin-top: -60px;"></div>
-          <div class="card p2stack" style="margin-top: 60px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p2stack" style="margin-top: 90px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p2stack" style="margin-top: 120px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p2stack" style="margin-top: 150px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p2stack" style="margin-top: 180px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p2stack" style="margin-top: 210px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p2stack" style="margin-top: 240px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p2stack" style="margin-top: 270px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p2stack" style="margin-top: 300px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
-          <div class="card p2stack" style="margin-top: 330px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+        <div class="player-label">
+          Left Player
         </div>
         <div class="lane">
+          <div id="player-1-lane-indicator">
+            &lt;
+          </div>
           <div class="card p1stack" style="margin-top: -180px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
           <div class="card p1stack" style="margin-top: -210px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
           <div class="card p1stack" style="margin-top: -240px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
@@ -77,8 +60,14 @@
           <div class="card p2stack" style="margin-top: 270px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
           <div class="card p2stack" style="margin-top: 300px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
           <div class="card p2stack" style="margin-top: 330px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div id="player-2-lane-indicator">
+            &gt;
+          </div>
         </div>
         <div class="lane">
+          <div id="player-1-lane-indicator">
+            &lt;
+          </div>
           <div class="card p1stack" style="margin-top: -180px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
           <div class="card p1stack" style="margin-top: -210px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
           <div class="card p1stack" style="margin-top: -240px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
@@ -100,6 +89,38 @@
           <div class="card p2stack" style="margin-top: 270px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
           <div class="card p2stack" style="margin-top: 300px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
           <div class="card p2stack" style="margin-top: 330px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div id="player-2-lane-indicator">
+            &gt;
+          </div>
+        </div>
+        <div class="lane">
+          <div id="player-1-lane-indicator">
+            &lt;
+          </div>
+          <div class="card p1stack" style="margin-top: -180px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p1stack" style="margin-top: -210px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p1stack" style="margin-top: -240px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p1stack" style="margin-top: -270px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p1stack" style="margin-top: -300px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p1stack" style="margin-top: -330px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p1stack" style="margin-top: -360px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p1stack" style="margin-top: -390px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p1stack" style="margin-top: -420px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p1stack" style="margin-top: -450px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card base none" fromLocation="hand" toLocation="base" style="margin-top: -60px;"></div>
+          <div class="card p2stack" style="margin-top: 60px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p2stack" style="margin-top: 90px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p2stack" style="margin-top: 120px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p2stack" style="margin-top: 150px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p2stack" style="margin-top: 180px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p2stack" style="margin-top: 210px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p2stack" style="margin-top: 240px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p2stack" style="margin-top: 270px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p2stack" style="margin-top: 300px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div class="card p2stack" style="margin-top: 330px;"><div class="card-label card-label-left"></div><div class="card-label card-label-right"></div></div>
+          <div id="player-2-lane-indicator">
+            &gt;
+          </div>
         </div>
       </div>
       <div class="player-area" id="player-2-area">

@@ -148,7 +148,7 @@ var view = (function (us) {
 
   /*
    * Public - Informs the user that their browser does not support websockets and they should
-   * consider getting a different one for the time being
+   * consider getting a different (read: better) one
   */
   var showWebsocketsNotSupportedMessage = function () {
     $('#websockets-not-supported').show()

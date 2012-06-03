@@ -71,7 +71,7 @@ div {
 }
 
 #play-area {
-  display: none;
+/*  display: none;*/
   position: absolute;
   left: 50%;
   top: 50%;
@@ -397,6 +397,31 @@ div {
   margin-left: -225px;
   height: 600px;
   overflow: visible;
+}
+
+#player-1-lane-indicator, #player-2-lane-indicator {
+  display: none;
+  position:absolute;
+  font-size: 4em;
+  width:100%;
+  height: em;
+  color: #555;
+  text-align: center;
+}
+
+.lane:hover #player-1-lane-indicator, .lane:hover #player-2-lane-indicator {
+  display: block;
+  cursor: default;
+}
+
+#player-1-lane-indicator {
+  top: 0px;
+  margin-top: 1em;
+}
+
+#player-2-lane-indicator {
+  bottom: 0px;
+  margin-bottom: 1em;
 }
 
 .lane {
