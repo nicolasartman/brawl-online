@@ -115,12 +115,17 @@ websocket_handle({text, Msg}, Req, PlayerId) ->
       io:format("Sending ~w ~n", [GameState]),
       {reply, create_game_state(GameState), Req, PlayerId};
     #brawl_req{message_type="rematch", game_id=GameId} ->
-      brawl_server:reset(GameId),
-      case brawl_server:start_game(GameId) of
-        {started, GameState} ->
-          broadcast_start(GameId, GameState),
-          {ok, Req, PlayerId};
-        _ -> 
+      case brawl_server:vote_rematch(GameId, PlayerId) of
+        true ->
+          brawl_server:reset(GameId),
+          case brawl_server:start_game(GameId) of
+            {started, GameState} ->
+              broadcast_start(GameId, GameState),
+              {ok, Req, PlayerId};
+                _ -> 
+              {ok, Req, PlayerId}
+          end;
+        false ->
           {ok, Req, PlayerId}
       end;
     _ ->

@@ -2,7 +2,7 @@
 -behavior(gen_server).
 -include("include/brawl_req.hrl").
 -export([start/0, start_link/0, init/1, handle_call/3, terminate/2]).
--export([new_game/0, start_game/1, play/4, pick_deck/3, reset/1,
+-export([new_game/0, start_game/1, play/4, pick_deck/3, reset/1, vote_rematch/2,
          state/1, stop/1, exists/1, leave/2, join/2, get_players/1, get_decks/1]).
 
 new_game() ->
@@ -36,6 +36,8 @@ leave(GameId, Player) ->
   call_game(GameId, {leave, Player}).
 get_decks(GameId) ->
   call_game(GameId, get_decks).
+vote_rematch(GameId, PlayerId) ->
+  call_game(GameId, {vote_rematch, PlayerId}).
 
 stop(GameId) ->
   case call_game(GameId, stop) of
@@ -163,6 +165,22 @@ handle_call(start_game, _From, Game) ->
     _ ->
       {reply, {error, not_enough_players}, Game}
   end;
+handle_call({vote_rematch, PlayerId}, _From, Game) ->
+  VoteCounted = case Game of
+    #brawl_game{player1=PlayerId} ->
+      Game#brawl_game{player1_rematch=true};
+    #brawl_game{player2=PlayerId} ->
+      Game#brawl_game{player2_rematch=true};
+    _ ->
+      Game
+  end,
+  {Rematch, FinalGame} = case VoteCounted of
+    #brawl_game{player1_rematch=true, player2_rematch=true} ->
+      {true, VoteCounted#brawl_game{player1_rematch=false, player2_rematch=false}};
+    _ ->
+      {false, VoteCounted}
+  end,
+  {reply, Rematch, FinalGame};
 handle_call(state, _From, Game) ->
   {reply, Game#brawl_game.state, Game};
 handle_call(visible_state,_From, Game) ->

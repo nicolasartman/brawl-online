@@ -14,6 +14,8 @@
         player2 = none :: none | binary(),
         player1deck = none :: none | list(),
         player2deck = none :: none | list(),
+        player1_rematch = false :: true | false,
+        player2_rematch = false :: true | false,
         state = none :: none | tuple()
 }).
 
