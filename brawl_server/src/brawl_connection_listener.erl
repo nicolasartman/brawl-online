@@ -1,7 +1,6 @@
 -module(brawl_connection_listener).
 -behavior(cowboy_http_handler).
 -behavior(cowboy_http_websocket_handler).
--include("deps/cowboy/include/http.hrl").
 -include("include/brawl_req.hrl").
 -export([init/3, handle/2, terminate/2]).
 -export([websocket_init/3, websocket_handle/3,
@@ -39,7 +38,7 @@ websocket_handle({text, Msg}, Req, PlayerId) ->
       io:format("Connect message received~n"),
       case brawl_server:exists(GameId) of
         true ->
-          ets:insert(connections, #brawl_connection{game_id=GameId, websocket=Req#http_req.pid}),
+          ets:insert(connections, #brawl_connection{game_id=GameId, websocket=self()}),
           {P1, P2} = brawl_server:get_players(GameId),
           State = brawl_server:state(GameId),
           Reply = create_connected(P1 == none, P2 == none, State /= none, brawl:decks()),
@@ -139,8 +138,8 @@ websocket_info(JsonMsg, Req, PlayerId) ->
   io:format("Sending message ~s to ~w~n", [JsonMsg, self()]),
   {reply, {text, JsonMsg}, Req, PlayerId}.
 
-websocket_terminate(Reason, Req, PlayerId) ->
-  Ws = Req#http_req.pid,
+websocket_terminate(Reason, _Req, PlayerId) ->
+  Ws = self(),
   io:format("Closing socket for reason: ~w~n", [Reason]),
   Games = ets:match(connections, #brawl_connection{game_id='$1', websocket=Ws, _='_' }),
   cleanup_games(Games, Ws, PlayerId),

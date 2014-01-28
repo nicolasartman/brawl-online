@@ -1,6 +1,5 @@
 
 -module(brawl_server_sup).
--include("include/brawl_req.hrl").
 
 -behaviour(supervisor).
 
@@ -25,14 +24,6 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
-  random:seed(now()),
-  ets:new(brawl_servers, [set, named_table, public]),
-  ets:new(connections, [named_table, bag, public, {keypos, #brawl_connection.game_id}]),
-  Dispatch = [ { '_', [ { [<<"play">>], brawl_connection_listener, []} ,
-                        { [<<"new_game">>], brawl_connection_listener, []} ] } ],
-  CowboySpec = cowboy:child_spec(brawl_connection_listener, 2024, 
-                            cowboy_tcp_transport, [{port, 8080}],
-                            cowboy_http_protocol, [{dispatch, Dispatch}]),
   {ok, { {one_for_one, 5, 10}, 
-       [ CowboySpec ]}}.
+       [ ]}}.
 
